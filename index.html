@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="一些学习记录：数学、计算机、AI 与随笔。" />
+  <title>Study Note · The Archive</title>
+  <link rel="icon" type="image/png" href="favicon.gif">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f2eee6;
+      --paper: #fffdf8;
+      --paper-2: #f9f6ef;
+      --ink: #171717;
+      --muted: #777269;
+      --soft: #9b958b;
+      --line: rgba(23, 23, 23, .11);
+      --accent: #8c2d40;
+      --shadow: 0 22px 70px rgba(45, 38, 28, .11);
+      --radius: 20px;
+      --sidebar: 242px;
+      --content: none;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 78% 12%, rgba(140,45,64,.055), transparent 27%),
+        radial-gradient(circle at 22% 58%, rgba(42,64,89,.04), transparent 25%),
+        var(--bg);
+      color: var(--ink);
+      font-family: 'Noto Sans SC', system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .14;
+      z-index: 100;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+
+    .shell { min-height: 100vh; }
+
+    /* ---------- LEFT NAV ---------- */
+    aside {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar);
+      padding: 28px 22px 24px;
+      border-right: 1px solid var(--line);
+      background: rgba(242,238,230,.90);
+      backdrop-filter: blur(18px);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+    }
+    .eyebrow {
+      font: 700 10px/1 Space Mono, monospace;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .brand-mini {
+      margin: 9px 0 33px;
+      font: 700 32px/1 'Cormorant Garamond', serif;
+      letter-spacing: -.025em;
+    }
+    .nav-label {
+      margin: 0 0 8px 12px;
+      color: var(--soft);
+      font: 700 9px Space Mono, monospace;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    nav { display: grid; gap: 6px; }
+    .nav-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px 12px;
+      border-radius: 12px;
+      color: #4f4a44;
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: transparent;
+      text-align: left;
+      transition: .2s ease;
+    }
+    .nav-item:hover { background: rgba(255,255,255,.52); color: var(--ink); }
+    .nav-item.active { background: var(--ink); color: #fff; }
+    .nav-item .count { font: 700 10px Space Mono, monospace; opacity: .53; }
+
+    .profile-mini {
+      margin-top: auto;
+      padding: 15px 0 0;
+      border-top: 1px solid var(--line);
+    }
+    .profile-row { display: flex; align-items: center; gap: 11px; }
+    .avatar {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255,255,255,.9);
+      box-shadow: 0 4px 12px rgba(0,0,0,.1);
+      background: #ddd6ca;
+    }
+    .profile-name { font-weight: 700; font-size: 14px; }
+    .profile-handle { margin-top: 2px; color: var(--muted); font: 10px Space Mono, monospace; }
+    .profile-links { display: flex; gap: 7px; margin-top: 12px; }
+    .profile-link {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 31px; height: 31px; border: 1px solid var(--line); border-radius: 9px;
+      background: rgba(255,255,255,.42); color: #4c4842; transition: .2s ease;
+    }
+    .profile-link:hover { transform: translateY(-2px); color: var(--ink); background: #fff; }
+    .side-note { margin-top: 11px; font-size: 10px; line-height: 1.7; color: var(--soft); }
+
+    /* ---------- MAIN ---------- */
+    main {
+      margin-left: var(--sidebar);
+      min-width: 0;
+      padding: 22px 34px 70px 42px;
+    }
+    .content-wrap { width: 100%; max-width: none; margin: 0; }
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between; gap: 18px;
+      margin-bottom: 22px;
+    }
+    .search { position: relative; flex: 1; max-width: 470px; }
+    .search input {
+      width: 100%;
+      padding: 12px 16px 12px 42px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.52);
+      border-radius: 999px;
+      outline: none;
+      color: var(--ink);
+      transition: .2s ease;
+    }
+    .search input:focus { border-color: rgba(23,23,23,.32); box-shadow: 0 0 0 4px rgba(23,23,23,.045); background: #fff; }
+    .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 17px; }
+    .clock { font: 700 10px Space Mono, monospace; color: var(--muted); white-space: nowrap; }
+
+    header { padding: 43px 0 27px; }
+    .title-wrap { position: relative; display: inline-block; }
+    .title {
+      margin: 0;
+      font: 600 clamp(76px, 9vw, 136px)/.76 'Cormorant Garamond', serif;
+      letter-spacing: -.055em;
+    }
+    .title span { font-style: italic; font-weight: 500; }
+    .title-mark {
+      position: absolute; right: -27px; top: -8px;
+      width: 62px; height: 62px;
+      border: 1px solid rgba(140,45,64,.42); border-radius: 50%;
+    }
+    .title-mark::before { content: ''; position: absolute; width: 1px; height: 85px; left: 30px; top: -12px; background: rgba(140,45,64,.18); transform: rotate(28deg); }
+    .title-mark::after { content: ''; position: absolute; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; top: 8px; left: 25px; }
+    .subtitle {
+      max-width: 770px; margin: 19px 0 0;
+      color: var(--muted); font-size: 14px; line-height: 1.95;
+    }
+    .rule { height: 1px; background: var(--line); margin: 0 0 22px; }
+
+    .section-head {
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 18px;
+      margin: 0 0 15px;
+    }
+    .section-head h2 { margin: 0; font: 700 13px Space Mono, monospace; letter-spacing: .08em; }
+    .section-head p { margin: 0; color: var(--muted); font-size: 11px; }
+
+    /* ---------- ZHIHU-LIKE FEED ---------- */
+    .feed { display: grid; gap: 14px; }
+    .card {
+      position: relative;
+      background: rgba(255,253,248,.93);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 3px 0 rgba(23,23,23,.018);
+      cursor: pointer;
+      transform: translateY(12px);
+      opacity: 0;
+      animation: rise .65s ease forwards;
+    }
+    @keyframes rise { to { transform: translateY(0); opacity: 1; } }
+    .card:hover { box-shadow: var(--shadow); border-color: rgba(23,23,23,.15); }
+
+    .card-main, .card.featured .card-main { display: grid; grid-template-columns: minmax(0, 1fr) 380px; min-height: 320px; }
+    .card-visual {
+      position: relative; order: 2; overflow: hidden;
+      min-height: 320px;
+      background: linear-gradient(135deg,#d9d2c5,#efe8dc);
+    }
+        .card-visual::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(20,20,20,.12));
+    }
+    .visual-lines {
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(0deg, transparent 0 27px, rgba(23,23,23,.08) 28px 29px), repeating-linear-gradient(90deg, transparent 0 47px, rgba(23,23,23,.055) 48px 49px);
+      transform: rotate(-7deg) scale(1.13);
+    }
+    .visual-orbit {
+      position: absolute; left: 18%; top: 15%; width: 67%; height: 66%;
+      border: 1px solid rgba(23,23,23,.2); border-radius: 50%; transform: rotate(-25deg);
+    }
+    .visual-orbit::before, .visual-orbit::after {
+      content: ''; position: absolute; left: -7%; right: -7%; top: 35%; height: 1px; background: rgba(23,23,23,.14);
+      transform: rotate(38deg);
+    }
+    .visual-orbit::after { transform: rotate(-38deg); }
+    .visual-math {
+      position: absolute; inset: 0; display: grid; place-items: center;
+      padding: 16px; text-align: center;
+      font: 600 clamp(35px,5vw,66px)/1 'Cormorant Garamond', serif;
+      color: rgba(23,23,23,.74);
+      transform: rotate(-4deg);
+      z-index: 1;
+    }
+    .visual-noise { position:absolute; width:120px; height:120px; border-radius:50%; top:-30px; right:-20px; background:rgba(140,45,64,.10); filter:blur(4px); }
+
+    .card-content, .card.featured .card-content { order: 1; padding: 31px 34px 30px; display:flex; flex-direction:column; min-width:0; }
+    .meta { display:flex; align-items:center; justify-content:space-between; gap:12px; color:var(--muted); font: 10px Space Mono,monospace; letter-spacing:.06em; text-transform:uppercase; }
+    .category-pill { padding: 4px 7px; border-radius: 999px; background: var(--paper-2); border:1px solid var(--line); }
+    .card h3 {
+      margin: 15px 0 11px;
+      font: 600 26px/1.16 'Cormorant Garamond', serif;
+      letter-spacing: -.018em;
+      max-width: 690px;
+    }
+    .card h3, .card.featured h3 { font-size: 38px; max-width: 860px; }
+    .excerpt { margin: 0; color: #656057; font-size: 13px; line-height: 1.9; max-width: 690px; }
+    .article-footer { margin-top:auto; padding-top: 18px; display:flex; align-items:end; justify-content:space-between; gap:12px; }
+    .tags { display:flex; flex-wrap:wrap; gap:6px; }
+    .tag { padding:5px 8px; border-radius:999px; font-size:10px; line-height:1; border:1px solid rgba(23,23,23,.07); }
+    .tag.math { background:#e9e0c7; }
+    .tag.cs { background:#dfe7e1; }
+    .tag.ai { background:#dedff0; }
+    .tag.life { background:#efd8d2; }
+    .read-mark { color: var(--soft); font:700 10px Space Mono,monospace; white-space:nowrap; }
+    .preview {
+      position:absolute; left:25px; right:25px; bottom:18px;
+      padding:15px 16px; border-radius:15px;
+      background:rgba(255,253,248,.97); border:1px solid rgba(23,23,23,.12);
+      box-shadow:0 15px 40px rgba(23,23,23,.15);
+      transform:translateY(120%); opacity:0;
+      transition:.28s cubic-bezier(.2,.8,.2,1);
+      z-index:5; backdrop-filter:blur(14px);
+    }
+    .card:hover .preview { transform:translateY(0); opacity:1; }
+    .preview strong { display:block; margin-bottom:6px; font:700 9px Space Mono,monospace; letter-spacing:.13em; }
+    .preview p { margin:0; font-size:11px; line-height:1.75; color:#57524a; }
+
+    .empty { display:none; padding:54px 20px; border:1px dashed var(--line); border-radius:18px; color:var(--muted); text-align:center; }
+
+    /* ---------- CONTACT ---------- */
+    .contact {
+      margin-top: 34px;
+      padding: 27px 28px;
+      background: rgba(255,253,248,.77);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      display:grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 22px;
+    }
+    .contact-kicker { font:700 9px Space Mono,monospace; letter-spacing:.15em; color:var(--soft); }
+    .contact h3 { margin: 7px 0 8px; font:600 30px/1.05 'Cormorant Garamond',serif; }
+    .contact p { margin:0; color:var(--muted); font-size:11px; line-height:1.75; }
+    .contact-box { display:flex; align-items:center; gap:14px; justify-content:flex-end; }
+    .contact-avatar { width:62px; height:62px; border-radius:50%; object-fit:cover; border:2px solid #fff; box-shadow:0 8px 18px rgba(0,0,0,.11); background:#ddd6ca; }
+    .contact-links { display:grid; gap:7px; }
+    .contact-link { display:inline-flex; align-items:center; gap:8px; padding:8px 11px; border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,.6); font-size:10px; transition:.2s ease; }
+    .contact-link:hover { transform:translateX(2px); background:#fff; }
+
+    .footer { margin-top:20px; padding-top:18px; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:20px; color:var(--soft); font-size:10px; }
+
+    @media (max-width: 980px) {
+      :root { --sidebar: 200px; }
+      main { padding-left:34px; padding-right:30px; }
+      main { padding-left: 30px; padding-right: 24px; }
+      .card-main, .card.featured .card-main { grid-template-columns: minmax(0,1fr) 340px; }
+      .card h3, .card.featured h3 { font-size:34px; }
+    }
+    @media (max-width: 760px) {
+      aside {
+        position:sticky; top:0; bottom:auto; width:100%; height:auto;
+        padding:11px 13px; border-right:0; border-bottom:1px solid var(--line);
+        flex-direction:row; align-items:center; gap:10px;
+      }
+      .eyebrow,.brand-mini,.profile-mini,.nav-label { display:none; }
+      nav { display:flex; gap:5px; overflow-x:auto; width:100%; }
+      .nav-item { width:auto; white-space:nowrap; padding:8px 10px; }
+      .nav-item .count { display:none; }
+      main { margin-left:0; padding:15px 14px 46px; }
+      .topbar { margin-bottom:10px; }
+      .clock { display:none; }
+      header { padding:27px 0 22px; }
+      .title { font-size:72px; }
+      .title-mark { width:50px; height:50px; right:-19px; top:-6px; }
+      .title-mark::before { height:65px; left:24px; }
+      .title-mark::after { width:8px; height:8px; top:7px; left:20px; }
+      .subtitle { font-size:12px; line-height:1.85; }
+      .section-head { align-items:flex-start; flex-direction:column; gap:6px; }
+      .card-main, .card.featured .card-main { grid-template-columns:1fr; }
+      .card-visual, .card.featured .card-visual { order:0; min-height:200px; }
+      .card-content, .card.featured .card-content { padding:21px 20px 20px; }
+      .card h3, .card.featured h3 { font-size:29px; }
+      .article-footer { margin-top:20px; }
+      .preview { position:static; transform:none; opacity:1; margin:0 14px 14px; box-shadow:none; }
+      .contact { grid-template-columns:1fr; }
+      .contact-box { justify-content:flex-start; }
+      .footer { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside>
+      <div class="eyebrow">Personal Archive / 2026</div>
+      <div class="brand-mini">notebook.</div>
+      <div class="nav-label">Explore</div>
+      <nav id="categoryNav">
+        <button class="nav-item active" data-category="all">全部 <span class="count" data-count="all"></span></button>
+        <button class="nav-item" data-category="math">数学 <span class="count" data-count="math"></span></button>
+        <button class="nav-item" data-category="cs">计算机 <span class="count" data-count="cs"></span></button>
+        <button class="nav-item" data-category="ai">AI <span class="count" data-count="ai"></span></button>
+        <button class="nav-item" data-category="life">杂谈文章 <span class="count" data-count="life"></span></button>
+      </nav>
+      <div class="profile-mini">
+        <div class="profile-row">
+          <img class="avatar" src="https://github.com/DUTsaver.png?size=160" alt="DUTsaver avatar" />
+          <div>
+            <div class="profile-name">DUTsaver</div>
+            <div class="profile-handle">github.com/DUTsaver</div>
+          </div>
+        </div>
+        <div class="profile-links">
+          <a class="profile-link" href="https://github.com/DUTsaver" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
+          <a class="profile-link" href="mailto:your-email@example.com" aria-label="Email">@</a>
+        </div>
+        <div class="side-note">Mathematics · Numerical Computation · Computer Science · AI</div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="content-wrap">
+        <div class="topbar">
+          <label class="search" aria-label="搜索文章">
+            <span class="search-icon">⌕</span>
+            <input id="searchInput" type="search" placeholder="搜索标题、正文、Tag……" />
+          </label>
+          <div class="clock" id="clock"></div>
+        </div>
+
+        <header>
+          <div class="title-wrap">
+            <h1 class="title">The <span>Archive</span></h1>
+            <div class="title-mark"></div>
+          </div>
+          <p class="subtitle">学习不是把知识堆起来，而是不断留下可以回望的痕迹。这里记录数学、计算机、AI，以及一些不愿丢掉的想法。</p>
+        </header>
+
+        <div class="rule"></div>
+
+        <div class="section-head">
+          <div>
+            <h2 id="sectionTitle">LATEST NOTES</h2>
+            <p id="sectionHint">按时间倒序 · 鼠标悬停查看内容预览</p>
+          </div>
+          <p id="resultInfo"></p>
+        </div>
+
+        <section class="feed" id="feed"></section>
+        <div class="empty" id="empty">没有找到匹配的文章。试试别的关键词。</div>
+
+        <section class="contact" id="contact">
+          <div>
+            <div class="contact-kicker">GET IN TOUCH</div>
+            <h3>欢迎来交流数学、算法与新的想法。</h3>
+            <p>这个页面既是学习记录，也是一个长期整理知识与思考的个人档案。如果你发现有趣的文章、研究方向或项目，欢迎联系。</p>
+          </div>
+          <div class="contact-box">
+            <img class="contact-avatar" src="https://github.com/DUTsaver.png?size=200" alt="DUTsaver avatar" />
+            <div class="contact-links">
+              <a class="contact-link" href="https://github.com/DUTsaver" target="_blank" rel="noopener">↗ <span>GitHub / DUTsaver</span></a>
+              <a class="contact-link" href="mailto:your-email@example.com">✉ <span>your-email@example.com</span></a>
+            </div>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <span>© 2026 · DUTsaver / Personal Knowledge Archive</span>
+          <span>Built with plain HTML / CSS / JavaScript · GitHub Pages ready</span>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // ========== 文章数据 ==========
+    // category: math / cs / ai / life
+    // tags: [显示名称, 颜色类别]
+    // image: 可替换成你自己的文章封面图片 URL；当前版本使用抽象数学视觉。
+    const posts = [
+      {
+        title: 'Krylov 子空间方法：为什么它适合大规模线性方程组？',
+        date: '2026-09-05',
+        category: 'math',
+        symbol: 'Ax = b',
+        tags: [['Krylov Method','math'],['数值线性代数','math'],['迭代法','cs']],
+        excerpt: '从子空间构造出发，理解 Arnoldi、GMRES 与 Lanczos 的基本思想，以及为什么这些方法特别适合大型稀疏问题。'
+      },
+      {
+        title: 'GMRES 的直觉：在越来越大的子空间里找最好的答案',
+        date: '2026-09-02',
+        category: 'math',
+        symbol: 'min ‖r‖',
+        tags: [['GMRES','math'],['最小残差','math'],['线性方程组','cs']],
+        excerpt: '把 GMRES 看成“不断扩大搜索空间并重新选择最佳近似”的过程，从几何直觉理解最小残差条件。'
+      },
+      {
+        title: '从程序到算法：我开始重新理解数值计算',
+        date: '2026-08-30',
+        category: 'cs',
+        symbol: 'O(n³) → ?',
+        tags: [['算法','cs'],['Complexity','cs'],['数值计算','math']],
+        excerpt: '以前把算法当成实现细节，现在越来越意识到：复杂度、稳定性和数据结构本身就是数学的一部分。'
+      },
+      {
+        title: 'AI4Math 夏季课程之后：数学到底能怎样帮助 AI？',
+        date: '2026-08-24',
+        category: 'ai',
+        symbol: 'f : X → Y',
+        tags: [['AI4Math','ai'],['机器学习','ai'],['数学基础','math']],
+        excerpt: '从优化、线性代数与自动微分三个角度记录课程后的思考，也整理一些值得继续追的方向。'
+      },
+      {
+        title: '关于“学数学到底有没有用”的一点杂谈',
+        date: '2026-08-18',
+        category: 'life',
+        symbol: '∴',
+        tags: [['随笔','life'],['学习方法','life'],['数学观','math']],
+        excerpt: '不是鸡汤，只是想记录一个正在学习数学的人，对“有用”“理解”和“长期主义”这些词的一点看法。'
+      },
+      {
+        title: '为什么我最终决定把研究方向转向计算数学',
+        date: '2026-08-12',
+        category: 'life',
+        symbol: '→ ∞',
+        tags: [['研究方向','life'],['计算数学','math'],['研究计划','life']],
+        excerpt: '从几何到数值线性代数，这次转向并不是放弃数学，而是换一种方式接近我真正感兴趣的问题。'
+      }
+    ];
+
+    const categoryNames = {
+      all:'LATEST NOTES', math:'MATHEMATICS', cs:'COMPUTER SCIENCE', ai:'ARTIFICIAL INTELLIGENCE', life:'ESSAYS / LIFE'
+    };
+    const categoryLabels = { math:'数学', cs:'计算机', ai:'AI', life:'杂谈文章' };
+    let currentCategory = 'all';
+
+    const feed = document.getElementById('feed');
+    const empty = document.getElementById('empty');
+    const resultInfo = document.getElementById('resultInfo');
+    const sectionTitle = document.getElementById('sectionTitle');
+    const searchInput = document.getElementById('searchInput');
+
+    function formatDate(s) {
+      const [y,m,d] = s.split('-');
+      return `${y}.${m}.${d}`;
+    }
+
+    function render() {
+      const q = searchInput.value.trim().toLowerCase();
+      const filtered = posts
+        .filter(p => currentCategory === 'all' || p.category === currentCategory)
+        .filter(p => !q || [p.title,p.excerpt,p.category,...p.tags.map(t=>t[0])].join(' ').toLowerCase().includes(q))
+        .sort((a,b) => b.date.localeCompare(a.date));
+
+      sectionTitle.textContent = categoryNames[currentCategory];
+      resultInfo.textContent = `${filtered.length} / ${posts.length}`;
+
+      feed.innerHTML = filtered.map((p, i) => `
+        <article class="card" style="animation-delay:${i * 75}ms" tabindex="0">
+          <div class="card-main">
+            <div class="card-visual">
+              <div class="visual-lines"></div>
+              <div class="visual-orbit"></div>
+              <div class="visual-noise"></div>
+              <div class="visual-math">${p.symbol}</div>
+            </div>
+            <div class="card-content">
+              <div class="meta">
+                <span>${formatDate(p.date)}</span>
+                <span class="category-pill">${categoryLabels[p.category]}</span>
+              </div>
+              <h3>${p.title}</h3>
+              <p class="excerpt">${p.excerpt}</p>
+              <div class="article-footer">
+                <div class="tags">
+                  ${p.tags.map(([text, kind]) => `<span class="tag ${kind}">${text}</span>`).join('')}
+                </div>
+                <span class="read-mark">READ →</span>
+              </div>
+            </div>
+          </div>
+          <div class="preview">
+            <strong>ARTICLE PREVIEW</strong>
+            <p>${p.excerpt}</p>
+          </div>
+        </article>
+      `).join('');
+
+      empty.style.display = filtered.length ? 'none' : 'block';
+    }
+
+    function updateCounts() {
+      document.querySelector('[data-count="all"]').textContent = posts.length;
+      ['math','cs','ai','life'].forEach(c => {
+        document.querySelector(`[data-count="${c}"]`).textContent = posts.filter(p => p.category === c).length;
+      });
+    }
+
+    document.getElementById('categoryNav').addEventListener('click', e => {
+      const btn = e.target.closest('[data-category]');
+      if (!btn) return;
+      currentCategory = btn.dataset.category;
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.toggle('active', el === btn));
+      render();
+    });
+
+    searchInput.addEventListener('input', render);
+
+    function tick() {
+      document.getElementById('clock').textContent = new Date().toLocaleString('zh-CN', {
+        year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', hour12:false
+      });
+    }
+    tick();
+    setInterval(tick, 1000);
+    updateCounts();
+    render();
+  </script>
+</body>
+</html>
