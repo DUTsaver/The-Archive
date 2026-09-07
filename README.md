@@ -1,6 +1,6 @@
 # The Archive
 
-> A personal archive of mathematical notes, technical articles, AI explorations, and ideas.
+> 📖 A personal archive of mathematical notes, technical articles, AI explorations, and ideas.
 
 <p align="center">
   <img 
@@ -16,57 +16,60 @@
 </p>
 
 <p align="center">
-  <sub>Homepage</sub>
+  <sub>🏠 Homepage</sub>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <sub>Article Page</sub>
+  <sub>📄 Article Page</sub>
 </p>
 
 ---
 
-## About
+## 📚 About
 
 The Archive is a personal knowledge archive designed to collect and organize
 mathematical notes, computer science topics, AI research, and personal essays.
 
 The project focuses on:
 
-- A clean editorial-style interface
-- Category-based navigation
-- Tag-based organization
-- Searchable notes and articles
-- Dedicated article pages
-- A consistent visual language across the entire site
+- ✦ A clean editorial-style interface
+- 🗂️ Category-based navigation
+- 🏷️ Tag-based organization
+- 🔎 Searchable notes and articles
+- 📄 Dedicated article pages
+- 🎨 A consistent visual language across the entire site
 
-## Features
+## ✨ Features
 
-### Knowledge Feed
+### 📰 Knowledge Feed
 
 Articles are presented in a continuous editorial-style feed rather than a simple card grid.
 
-### Categories
+### 🧮 Categories
 
-- Mathematics
-- Computer Science
-- AI
-- Essays
+- 🧮 Mathematics
+- 💻 Computer Science
+- 🤖 AI
+- ✍️ Essays
 
-### Article Pages
+### 📖 Article Pages
 
 Each article has its own reading page with:
 
-- Table of contents
-- Mathematical formulas
-- Images and illustrations
-- Author information
-- Source attribution
+- 📑 Table of contents
+- ∑ Mathematical formulas
+- 🖼️ Images and illustrations
+- 👤 Author information
+- 🔗 Source attribution
 
-### Author Profile
+### 👤 Author Profile
 
 Every article is connected to its author profile and contact information.
 
 ---
 
-## Tech Stack
+<img width="691" height="600" alt="无奈" src="https://github.com/user-attachments/assets/830d6c8a-3eb6-4a98-b041-310c34933d16" />
+
+
+## 🛠️ Tech Stack
 
 ```text
 HTML
