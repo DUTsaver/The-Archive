@@ -1,0 +1,28 @@
+name: Markdown Format Check & Auto-Fix
+
+on:
+  pull_request:
+    paths:
+      - '**.md'
+
+jobs:
+  markdown-lint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 允许 Actions 自动提交格式化后的代码
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Markdownlint Auto-Fix
+        uses: DavidAnson/markdownlint-cli2-action@v16
+        with:
+          globs: '**/*.md'
+          fix: true
+
+      - name: Commit formatted markdown
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'style: 自动格式化 Markdown 排版'
