@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DUTsaver 的作者主页与文章列表。">
+  <title>DUTsaver · Author</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#f2eee6;--paper:#fffdf8;--paper2:#f9f6ef;--ink:#171717;--muted:#777269;--soft:#9b958b;--line:rgba(23,23,23,.11);--accent:#8c2d40;--shadow:0 22px 70px rgba(45,38,28,.11);--sidebar:242px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 78% 12%,rgba(140,45,64,.055),transparent 27%),radial-gradient(circle at 22% 58%,rgba(42,64,89,.04),transparent 25%),var(--bg);color:var(--ink);font-family:'Noto Sans SC',system-ui,sans-serif;overflow-x:hidden}
+    body:before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.14;z-index:100;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");mix-blend-mode:multiply}
+    a{color:inherit;text-decoration:none}.shell{min-height:100vh}aside{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar);padding:28px 22px 24px;border-right:1px solid var(--line);background:rgba(242,238,230,.90);backdrop-filter:blur(18px);z-index:20;display:flex;flex-direction:column}.eyebrow{font:700 10px/1 Space Mono,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}.brand{margin:9px 0 33px;font:700 32px/1 'Cormorant Garamond',serif;letter-spacing:-.025em}.toc-label{margin:0 0 8px 12px;color:var(--soft);font:700 9px Space Mono,monospace;letter-spacing:.15em;text-transform:uppercase}.toc{display:grid;gap:5px}.toc a{padding:10px 12px;border-radius:12px;color:#4f4a44;font-size:12px;transition:.2s}.toc a:hover,.toc a.active{background:#fff;color:var(--ink)}.profile{margin-top:auto;padding-top:15px;border-top:1px solid var(--line)}.profile-row{display:flex;align-items:center;gap:11px}.avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.1)}.profile-name{font-weight:700;font-size:14px}.profile-sub{margin-top:2px;color:var(--muted);font:10px Space Mono,monospace}.profile-links{display:flex;gap:7px;margin-top:12px}.profile-link{display:inline-flex;align-items:center;justify-content:center;width:31px;height:31px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.42);font:700 9px Space Mono,monospace}.profile-note{margin-top:11px;font-size:10px;line-height:1.7;color:var(--soft)}
+    main{margin-left:var(--sidebar);padding:28px 5.5vw 70px}.wrap{max-width:1200px;margin:0 auto}.back{font:700 10px Space Mono,monospace;color:var(--muted);letter-spacing:.04em}.back:hover{color:var(--ink)}header{padding:72px 0 34px;border-bottom:1px solid var(--line)}.hero{display:grid;grid-template-columns:200px 1fr;gap:42px;align-items:center}.hero-avatar{width:180px;height:180px;border-radius:50%;object-fit:cover;border:4px solid rgba(255,255,255,.9);box-shadow:var(--shadow);background:#ddd6ca}.kicker{font:700 10px Space Mono,monospace;letter-spacing:.16em;color:var(--soft);text-transform:uppercase}.name{margin:7px 0 7px;font:600 clamp(58px,8vw,104px)/.84 'Cormorant Garamond',serif;letter-spacing:-.055em}.handle{font:700 11px Space Mono,monospace;color:var(--muted)}.intro{max-width:760px;margin:18px 0 0;font-size:14px;line-height:1.95;color:#5f5a52}.contact-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}.contact{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.58);font-size:11px}.contact:hover{background:#fff;transform:translateY(-1px)}.section{padding-top:30px}.section-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:14px}.section-head h2{margin:0;font:700 12px Space Mono,monospace;letter-spacing:.08em}.section-head p{margin:0;font-size:11px;color:var(--muted)}.article-list{display:grid;gap:10px}.article{display:grid;grid-template-columns:110px 1fr auto;gap:22px;align-items:center;padding:19px 20px;background:rgba(255,253,248,.84);border:1px solid var(--line);border-radius:16px;transition:.25s}.article:hover{transform:translateX(3px);box-shadow:var(--shadow);border-color:rgba(23,23,23,.16)}.date{font:700 10px Space Mono,monospace;color:var(--soft)}.article h3{margin:0 0 6px;font:600 25px/1.2 'Cormorant Garamond',serif}.article p{margin:0;color:#676158;font-size:11px;line-height:1.65}.tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}.tag{padding:4px 7px;border-radius:999px;font-size:9px;background:#e9e0c7;border:1px solid rgba(23,23,23,.06)}.read{font:700 9px Space Mono,monospace;color:var(--soft);white-space:nowrap}.footer{margin-top:35px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:var(--soft);font-size:10px}
+    @media(max-width:760px){aside{position:sticky;width:100%;height:auto;bottom:auto;padding:11px 13px;border-right:0;border-bottom:1px solid var(--line);flex-direction:row;align-items:center}.eyebrow,.brand,.toc-label,.profile{display:none}.toc{display:flex;overflow-x:auto;width:100%}.toc a{white-space:nowrap;padding:8px 10px}main{margin-left:0;padding:18px 14px 45px}.hero{grid-template-columns:1fr;gap:20px}.hero-avatar{width:120px;height:120px}.name{font-size:64px}.article{grid-template-columns:1fr;gap:9px}.read{display:none}.footer{flex-direction:column;gap:6px}}
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="eyebrow">Author / Profile</div>
+    <div class="brand">notebook.</div>
+    <div class="toc-label">Profile</div>
+    <nav class="toc">
+      <a href="#about">About</a>
+      <a href="#articles">Articles</a>
+    </nav>
+    <div class="profile">
+      <div class="profile-row"><img class="avatar" src="https://github.com/DUTsaver.png?size=160" alt="DUTsaver avatar"><div><div class="profile-name">DUTsaver</div><div class="profile-sub">PERSONAL ARCHIVE</div></div></div>
+      <div class="profile-links"><a class="profile-link" href="https://github.com/DUTsaver" target="_blank" rel="noopener">GH</a><a class="profile-link" href="mailto:your-email@example.com">MAIL</a><a class="profile-link" href="../index.html">HOME</a></div>
+      <div class="profile-note">Mathematics · Numerical Computation · Computer Science · AI</div>
+    </div>
+  </aside>
+
+  <main><div class="wrap">
+    <a class="back" href="../index.html">← BACK TO THE ARCHIVE</a>
+    <header id="about">
+      <div class="hero">
+        <img class="hero-avatar" src="Hilbert.jpg" alt="DUTsaver avatar">
+        <div>
+          <div class="kicker">AUTHOR / Hilbert</div>
+          <h1 class="name">Hilbert</h1>
+          <div class="handle">Dalian Universtiy of Technology</div>
+          <p class="intro">我目前在大连理工大学，我对微分几何，计算几何的研究很感兴趣。目前正在学习整体微分几何和黎曼流形，在计算几何领域我对计算机辅助几何设计，计算机图形学和等几何分析的内容很感兴趣。关于数值线性代数和光滑流形上的优化我也很感兴趣。
+            目前在计划前往东京大学同Kazuhiro Sato教授学习可控性评分和相关优化的研究。 关于可控性评分（可制御性スコア）是自2025年10月起，在JST初步研究领域“利用数学原理探索新科学预测与控制未来”中提出的新概念，想了解更多可以访问佐藤教授的Page：https://www.kazuhirosato.work/entry/controllability_score</p>
+          <p class="intro">我的个人兴趣包括学习几何学的知识，玩Apex，太鼓之达人（太鼓の達人）以及尝试各种游戏...还有尝试日本料理...</p> 
+          <p class="intro">如果我的文章存在问题，欢迎随时联系我。如果你对数学中几何学相关的内容或者电子游戏感兴趣，非常希望你随时和我联系，分享你的看法！！！</p>
+        
+          <div class="contact-row">
+            <a class="contact" href="https://github.com/DUTsaver" target="_blank" rel="noopener">↗ GitHub</a>
+            <a class="contact" href="AlexNin@mail.dlut.edu.cn">✉ Email</a>
+            <a class="contact" href="../index.html">⌂ Archive</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" id="articles">
+      <div class="section-head"><h2>ARTICLES BY DUTSAVER</h2><p>署名文章 · 按日期排列</p></div>
+      <div class="article-list">
+        <a class="article" href="../../Archives/数学分析中处理数列极限的各种技巧2026.9.7/math-analysis-sequence-limits.html">
+          <div class="date">2026.05.08</div>
+          <div><h3>数学分析中处理数列极限的各种技巧</h3><p>整理数列极限中常见而实用的处理技巧，包括三角函数公式、初等不等式、基本极限、夹逼准则、积分法、放缩、递推、Stolz 定理与上下极限等。</p><div class="tags"><span class="tag">数学分析</span><span class="tag">数列极限</span><span class="tag">学习记录</span></div></div>
+          <div class="read">READ →</div>
+        </a>
+        <a class="article" href="../index.html">
+          <div class="date">—</div>
+          <div><h3>更多文章将在这里出现</h3><p>以后每新增一篇文章，只需要把作者条目加入这里；下一步也可以改成由数据库或 Markdown 自动生成。</p></div>
+          <div class="read">ARCHIVE</div>
+        </a>
+      </div>
+    </section>
+
+    <footer class="footer"><span>© 2026 · DUTsaver</span><span>The Archive / Author Profile</span></footer>
+  </div></main>
+</body>
+</html>
