@@ -1,6 +1,6 @@
 # The Archive
 
-> A personal knowledge archive for mathematics, computer science, AI, and ideas.
+> A personal archive of mathematical notes, technical articles, AI explorations, and ideas.
 
 <p align="center">
   <img 
@@ -16,14 +16,16 @@
 </p>
 
 <p align="center">
-  <b>Personal Knowledge Archive · Mathematics · Computer Science · AI</b>
+  <sub>Homepage</sub>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <sub>Article Page</sub>
 </p>
 
 ---
 
 ## About
 
-The Archive is a personal study notes website designed to collect and organize
+The Archive is a personal knowledge archive designed to collect and organize
 mathematical notes, computer science topics, AI research, and personal essays.
 
 The project focuses on:
