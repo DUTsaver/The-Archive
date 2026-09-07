@@ -416,10 +416,20 @@
     // tags: [显示名称, 颜色类别]
     // image: 可替换成你自己的文章封面图片 URL；当前版本使用抽象数学视觉。
     const posts = [
+       {
+        title: '数学分析中处理数列极限的各种技巧',
+        date: '2026-09-05',
+        category: 'math',
+        url: "Archives/数学分析中处理数列极限的各种技巧2026.9.7/math-analysis-sequence-limits.html",
+        symbol: '数列极限！？',
+        tags: [['数学','math'],['数学分析','math'],['数列极限','math']],
+        excerpt: '数列极限的计算和证明不管是高等数学还是数学分析都是入门的第一章, 关于数列极限的处理手段有很多, 本文尝试整合一些几乎能覆盖大部分类型的技术'
+      },
       {
         title: 'Krylov 子空间方法：为什么它适合大规模线性方程组？',
         date: '2026-09-05',
         category: 'math',
+        url: "articles/krylov-subspace.html",
         symbol: 'Ax = b',
         tags: [['Krylov Method','math'],['数值线性代数','math'],['迭代法','cs']],
         excerpt: '从子空间构造出发，理解 Arnoldi、GMRES 与 Lanczos 的基本思想，以及为什么这些方法特别适合大型稀疏问题。'
@@ -494,7 +504,7 @@
       resultInfo.textContent = `${filtered.length} / ${posts.length}`;
 
       feed.innerHTML = filtered.map((p, i) => `
-        <article class="card" style="animation-delay:${i * 75}ms" tabindex="0">
+        <a href="${p.url}" class="card" style="animation-delay:${i * 75}ms" tabindex="0">
           <div class="card-main">
             <div class="card-visual">
               <div class="visual-lines"></div>

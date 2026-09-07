@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="数学分析中处理数列极限的各种技巧 - DUTsaver 的数学学习记录。">
+  <meta name="author" content="DUTsaver / Hilbert">
+  <title>数学分析中处理数列极限的各种技巧 · DUTsaver</title>
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <style>
+    :root{
+      --bg:#f2eee6;
+      --paper:#fffdf8;
+      --paper-2:#f9f6ef;
+      --ink:#171717;
+      --muted:#777269;
+      --soft:#9b958b;
+      --line:rgba(23,23,23,.11);
+      --accent:#8c2d40;
+      --sidebar:260px;
+      --shadow:0 20px 60px rgba(45,38,28,.10);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:28px}
+    body{
+      margin:0;color:var(--ink);background:
+      radial-gradient(circle at 82% 8%,rgba(140,45,64,.055),transparent 26%),
+      radial-gradient(circle at 18% 48%,rgba(42,64,89,.035),transparent 25%),
+      var(--bg);
+      font-family:'Noto Sans SC',system-ui,sans-serif;overflow-x:hidden;
+    }
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;z-index:50;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");mix-blend-mode:multiply}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%}
+
+    aside{
+      position:fixed;left:0;top:0;bottom:0;width:var(--sidebar);padding:28px 22px 24px;
+      border-right:1px solid var(--line);background:rgba(242,238,230,.90);backdrop-filter:blur(18px);z-index:20;
+      display:flex;flex-direction:column;
+    }
+    .eyebrow{font:700 10px/1 Space Mono,monospace;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
+    .brand{margin:10px 0 26px;font:700 31px/1 'Cormorant Garamond',serif;letter-spacing:-.03em}
+    .toc-label{font:700 9px Space Mono,monospace;letter-spacing:.15em;color:var(--soft);text-transform:uppercase;margin:0 0 10px 12px}
+    .toc{display:grid;gap:3px;overflow:auto;padding-right:3px}
+    .toc a{display:block;padding:8px 10px;border-radius:10px;font-size:11px;line-height:1.45;color:#5b564f;transition:.2s}
+    .toc a:hover{background:rgba(255,255,255,.55);color:var(--ink)}
+    .toc a.active{background:var(--ink);color:#fff}
+    .profile{margin-top:auto;padding-top:16px;border-top:1px solid var(--line)}
+    .profile-row{display:flex;align-items:center;gap:11px}
+    .avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.9);box-shadow:0 4px 12px rgba(0,0,0,.1);background:#ddd6ca}
+    .profile-name{font-weight:700;font-size:14px}.profile-sub{margin-top:2px;color:var(--muted);font:9px Space Mono,monospace}
+    .profile-links{display:flex;gap:7px;margin-top:10px}.profile-link{display:flex;align-items:center;justify-content:center;min-width:31px;height:31px;padding:0 9px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.42);font:700 9px Space Mono,monospace;transition:.2s}.profile-link:hover{transform:translateY(-2px);background:#fff}
+    .profile-note{margin-top:10px;color:var(--soft);font-size:9px;line-height:1.65}
+
+    main{margin-left:var(--sidebar);padding:24px 46px 80px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;padding-bottom:18px;border-bottom:1px solid var(--line);color:var(--muted)}
+    .back{font:700 9px Space Mono,monospace;letter-spacing:.08em;text-transform:uppercase}.back:hover{color:var(--ink)}
+    .date-now{font:700 9px Space Mono,monospace;white-space:nowrap}
+
+    .article-wrap{max-width:none;margin:0 auto}
+    header{padding:64px 0 30px;max-width:1200px}
+    .kicker{font:700 10px Space Mono,monospace;letter-spacing:.16em;color:var(--accent);text-transform:uppercase}
+    h1{margin:13px 0 15px;font:600 clamp(52px,6.4vw,92px)/.92 'Cormorant Garamond',serif;letter-spacing:-.045em;max-width:1100px}
+    .dek{margin:0;max-width:980px;color:#625d55;font-size:15px;line-height:1.95}
+    .meta-line{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:20px;color:var(--muted);font:9px Space Mono,monospace}
+    .pill{padding:5px 8px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.48)}
+
+    .hero{margin:8px 0 42px;background:var(--paper);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+    .hero img{display:block;width:100%;max-height:440px;object-fit:cover}
+    .hero-caption{padding:13px 16px;color:var(--soft);font-size:10px;line-height:1.7;border-top:1px solid var(--line)}
+
+    .article-grid{display:block}
+    article{background:rgba(255,253,248,.72);border:1px solid var(--line);border-radius:22px;padding:36px 44px 46px;box-shadow:0 3px 0 rgba(23,23,23,.018)}
+    .lead{font-size:17px;line-height:2.05;color:#393630}
+    article h2{scroll-margin-top:22px;margin:48px 0 18px;padding-top:22px;border-top:1px solid var(--line);font:700 27px/1.2 'Cormorant Garamond',serif;letter-spacing:-.01em}
+    article h3{margin:31px 0 12px;font:700 17px/1.35 'Noto Sans SC',sans-serif}
+    article h4{margin:24px 0 10px;font:700 13px/1.35 Space Mono,monospace;letter-spacing:.04em}
+    article p{margin:13px 0;font-size:14px;line-height:2.02;color:#454039}
+    article strong{color:#2b2823}
+    .equation{margin:22px 0;padding:16px 14px;border:1px solid rgba(23,23,23,.08);border-left:3px solid rgba(140,45,64,.48);border-radius:12px;background:#fbf8f1;overflow:auto;text-align:center}
+    .proof{padding:14px 16px;margin:16px 0;background:rgba(242,238,230,.62);border-radius:12px;border:1px solid var(--line)}
+    .note{padding:15px 16px;margin:18px 0;border-left:3px solid var(--accent);background:rgba(140,45,64,.035);border-radius:0 12px 12px 0;color:#5f584f}
+    .result{padding:15px 16px;margin:18px 0;background:rgba(222,223,240,.34);border:1px solid rgba(23,23,23,.08);border-radius:12px}
+    .quote{margin:22px 0;padding:12px 18px;border-left:2px solid #aaa197;color:#696359;font-style:italic}
+    .bookshot{margin:24px auto;max-width:760px;background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 10px 28px rgba(45,38,28,.08)}
+    .bookshot img{display:block;width:100%}.bookshot figcaption{padding:10px 13px;font-size:10px;color:var(--soft);line-height:1.7}
+
+
+    .source-box{margin-top:32px;padding:22px 24px;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,248,.84)}
+    .source-box .k{font:700 9px Space Mono,monospace;letter-spacing:.13em;color:var(--soft);text-transform:uppercase}
+    .source-box p{margin:8px 0 0;font-size:11px;line-height:1.8;color:var(--muted)}
+    .source-link{display:inline-flex;margin-top:10px;padding:8px 11px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:10px;transition:.2s}.source-link:hover{transform:translateY(-2px)}
+    .notice{margin-top:12px;padding:14px;border-radius:12px;background:rgba(140,45,64,.045);color:#6f514f;font-size:10px;line-height:1.75}
+    footer{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;color:var(--soft);font-size:9px}
+
+    @media (max-width:1000px){
+      :root{--sidebar:220px}
+      main{padding-left:30px;padding-right:28px}
+
+    }
+    @media (max-width:740px){
+      aside{position:sticky;top:0;bottom:auto;width:100%;height:auto;padding:10px 12px;border-right:0;border-bottom:1px solid var(--line);flex-direction:row;align-items:center;gap:10px}
+      .eyebrow,.brand,.toc-label,.profile{display:none}.toc{display:flex;gap:4px;overflow:auto;width:100%}.toc a{white-space:nowrap;padding:7px 9px}
+      main{margin-left:0;padding:14px 12px 50px}.topbar{padding-bottom:11px}.date-now{display:none}
+      header{padding:36px 0 24px}h1{font-size:54px}.dek{font-size:12px}
+      .hero{border-radius:17px;margin-bottom:24px}.hero img{max-height:280px}
+      article{padding:24px 20px 32px;border-radius:17px}article h2{font-size:24px;margin-top:38px}article p{font-size:13px;line-height:1.95}.equation{font-size:13px;padding:13px 8px}
+      footer{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="eyebrow">Article / Mathematics</div>
+    <div class="brand">notebook.</div>
+    <div class="toc-label">Contents</div>
+    <nav class="toc" id="toc">
+      <a href="#s1">一 · 三角函数公式</a>
+      <a href="#s2">二 · 初等不等式</a>
+      <a href="#s3">三 · 基本极限</a>
+      <a href="#s5">五 · 夹逼准则</a>
+      <a href="#s6">六 · 积分法</a>
+      <a href="#s7">七 · 放缩</a>
+      <a href="#s8">八 · n 次方</a>
+      <a href="#s9">九 · 分部积分法</a>
+      <a href="#s10">十 · 迭代的数列极限</a>
+      <a href="#s11">十一 · 递推问题</a>
+      <a href="#s12">十二 · Stolz 定理</a>
+      <a href="#s13">十三 · 上极限与下极限</a>
+      <a href="#s14">十四 · 分段法</a>
+    </nav>
+    <div class="profile">
+      <div class="profile-row">
+        <img class="avatar" src="https://github.com/DUTsaver.png?size=160" alt="DUTsaver avatar">
+        <div>
+          <div class="profile-name">DUTsaver</div>
+          <div class="profile-sub">HILBERT · MATH NOTES</div>
+        </div>
+      </div>
+      <div class="profile-links">
+        <a class="profile-link" href="https://github.com/DUTsaver" target="_blank" rel="noopener">GH</a>
+        <a class="profile-link" href="mailto:your-email@example.com">MAIL</a>
+        <a class="profile-link" href="https://zhuanlan.zhihu.com/p/2012680278066348544?share_code=cPhZgNCRjeIP&utm_psn=2012726119573517084" target="_blank" rel="noopener">ZH</a>
+      </div>
+      <div class="profile-note">数学 · 数值计算 · 计算机 · AI</div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="topbar">
+      <a class="back" href="../../index.html">← Back to Archive</a>
+      <div class="date-now">PERSONAL KNOWLEDGE ARCHIVE</div>
+    </div>
+
+    <div class="article-wrap">
+      <header>
+        <div class="kicker">MATHEMATICS · SEQUENCE LIMITS</div>
+        <h1>数学分析中处理数列极限的各种技巧</h1>
+        <p class="dek">数列极限的计算和证明不管是高等数学还是数学分析都是入门的第一章。关于数列极限的处理手段有很多，本文尝试整合一些几乎能覆盖大部分类型的技术。</p>
+        <div class="meta-line">
+          <span>Hilbert / DUTsaver</span><span>·</span><span>2026.05.08</span><span>·</span><span class="pill">数学分析</span><span class="pill">数列极限</span><span class="pill">学习记录</span>
+        </div>
+      </header>
+
+      <figure class="hero">
+        <img src="assets/hero-sequence-limit.png" alt="数列极限示意图">
+        <figcaption>原文首图：数列极限的 ε-N 直观示意。</figcaption>
+      </figure>
+
+      <div class="article-grid">
+        <article id="article">
+          <p class="lead">本文只介绍相关的技巧和定理，并不会提供习题，不过可以参考文中技术实践于解决手中习题。本文内容主要来自谢惠民的《数学分析习题课讲义》和李扬的《数学分析强化讲义》，我得承认我只是想复述一遍从中学习的内容，除了加入一些自己的理解之外，本文的原创性并不高。</p>
+          <p>感兴趣的同学可以自己去学习这两本习题集，写得很好。</p>
+
+          <h2 id="s1">一、三角函数公式</h2>
+          <p>利用三角函数的和差化积，积化和差往往能解决一些三角函数和、三角函数乘积相关数列的极限问题。</p>
+          <h3>积化和差公式</h3>
+          <div class="equation">\[
+          \sin x\cos y=\frac12[\sin(x+y)+\sin(x-y)]\\
+          \cos x\sin y=\frac12[\sin(x+y)-\sin(x-y)]\\
+          \cos x\cos y=\frac12[\cos(x+y)+\cos(x-y)]\\
+          \sin x\sin y=-\frac12[\cos(x+y)-\cos(x-y)]
+          \]</div>
+          <h3>和差化积公式</h3>
+          <h3>一些恒等式</h3>
+          <div class="equation">\[
+          \cos\frac{\alpha}{2}\cos\frac{\alpha}{2^2}\cdots\cos\frac{\alpha}{2^n}=\frac{\sin\alpha}{2^n\sin\frac{\alpha}{2^n}}
+          \]</div>
+          <div class="equation">\[
+          \arctan\frac1{2k^2}=\arctan\frac{k}{k+1}-\arctan\frac{k-1}{k}
+          \]</div>
+          <div class="equation">\[
+          \sin x+\sin2x+\cdots+\sin nx=\frac{\cos\frac x2-\cos\left(n+\frac12\right)x}{2\sin\frac x2}
+          \]</div>
+          <div class="equation">\[
+          \cos x+\cos2x+\cdots+\cos nx=\frac{\sin\left(n+\frac12\right)x}{2\sin\frac x2}-\frac12
+          \]</div>
+          <p>对于第一个恒等式，当 \(x=\frac{\pi}{2}\) 的时候，就是韦达公式。</p>
+          <div class="equation">\[
+          \sqrt{\frac12}\cdot\sqrt{\frac12+\frac12\sqrt{\frac12}}\cdot\sqrt{\frac12+\frac12\sqrt{\frac12+\frac12\sqrt{\frac12}}}\cdots=\frac2\pi.
+          \]</div>
+
+          <h2 id="s2">二、初等不等式</h2>
+          <p>一些初级的不等式也经常被用来计算数列极限，本文只尝试在这里收集展示一些有用的不等式，读者可以自行证明这些不等式，或者去本文的一些参考教材去寻找证明内容，此处不浪费篇幅展示这些不等式的证明。</p>
+          <h3>1. 伯努利不等式（Bernoulli）</h3>
+          <p>设 \(h&gt;-1\)，\(n\in\mathbb N_+\)，则成立不等式：</p>
+          <div class="equation">\[(1+h)^n\ge 1+nh.\]</div>
+          <p>其中等号成立的充分必要条件是 \(h=0\)。若齐次化、推广到一般正实数时就有：</p>
+          <div class="equation">\[(A+B)^n\ge A^n+nA^{n-1}B,\qquad A&gt;0,\ A+B\ge0.\]</div>
+          <h3>2. 幂次凹性不等式（Jensen 不等式的特例）</h3>
+          <p>设 \(\alpha\in(0,1)\)，则对任意的 \(x,y\ge0\)，有</p>
+          <div class="equation">\[(x+y)^\alpha\le x^\alpha+y^\alpha.\]</div>
+          <p><strong>推论：</strong> 已知 \(a,b\ge0\)，则</p>
+          <div class="equation">\[\left|\sqrt[n]{a}-\sqrt[n]{b}\right|\le\sqrt[n]{\,|a|-|b|\,}.\]</div>
+          <p>由此可以快速得到：若 \(a_n&gt;0\)，且 \(\lim_{n\to\infty}a_n=a\)，则对任意正整数 \(k\)，有</p>
+          <div class="equation">\[\lim_{n\to\infty}\sqrt[k]{a_n}=\sqrt[k]{a}.\]</div>
+          <h3>3. 平均值不等式链</h3>
+          <div class="equation">\[\sqrt{\frac{a_1^2+\cdots+a_n^2}{n}}\ge\frac{a_1+\cdots+a_n}{n}\ge\sqrt[n]{a_1\cdots a_n}\ge\frac{n}{\frac1{a_1}+\cdots+\frac1{a_n}}.\]</div>
+          <p>即</p><div class="equation">\[\text{平方平均数}\ge\text{算术平均数}\ge\text{几何平均数}\ge\text{调和平均数}.\]</div>
+          <p>当且仅当 \(a_1=a_2=\cdots=a_n\) 时取等号。</p>
+          <h3>4. 柯西-施瓦茨不等式（Cauchy-Schwarz）</h3>
+          <div class="equation">\[(a_1^2+\cdots+a_n^2)(b_1^2+\cdots+b_n^2)\ge(a_1b_1+\cdots+a_nb_n)^2.\]</div>
+          <p>当且仅当存在公共的实数 \(k,l\) 使得 \(kb_i=la_i\)（\(i=1,2,\dots,n\)）时取等号。</p>
+          <p>在谢惠民的《数学分析习题课讲义》中提到该不等式在线性空间中有漂亮的几何意义；在学习复变函数的时候，对于复数域还会用到它。</p>
+          <h3>5. 三点不等式</h3>
+          <div class="equation">\[|a+b|\le |a|+|b|.\]</div>
+          <p>其中等号成立的条件是 \(a\) 和 \(b\) 同号。</p>
+          <h3>6. 关于三角函数的不等式</h3>
+          <div class="equation">\[0&lt;x&lt;\frac\pi2\quad\Longrightarrow\quad\sin x&lt;x&lt;\tan x.\]</div>
+          <p>这是很简单的。《数学分析习题课讲义》中提到沐定夷教授的数学分析教材上册给出了相对于其他大部分数学分析教材直接利用几何定义更严格的证明方法。</p>
+
+          <h2 id="s3">三、基本极限</h2>
+          <p>一些基本的极限可以记住方便提供计算思路，当处理数列极限问题的时候看到大概的形式只要能想到这几个基本极限就好，这些结果本身的计算是很简单的。</p>
+          <div class="equation">\[
+          \lim_{n\to\infty}\sqrt[n]{a}=1\ (a&gt;0),\qquad
+          \lim_{n\to\infty}\frac{a^n}{n!}=0,\qquad
+          \lim_{n\to\infty}\sqrt[n]{n}=1.
+          \]</div>
+          <div class="equation">\[
+          \lim_{n\to\infty}\frac{n^k}{a^n}=0\ (a&gt;1),\qquad
+          \lim_{n\to\infty}\sqrt[n]{n!}=+\infty,\qquad
+          \lim_{n\to\infty}\frac{an+b}{cn+d}=\frac ac\ (c\ne0).
+          \]</div>
+          <p>对任意的 \(k&gt;0\) 都有</p>
+          <div class="equation">\[
+          \lim_{x\to+\infty}\frac{x^k}{e^x}=0,\qquad
+          \lim_{x\to+\infty}\frac{\ln x}{x^k}=0,\qquad
+          \lim_{x\to0^+}x^k\ln x=0.
+          \]</div>
+          <p>如果用 \(f(n)\ll g(n)\) 表示 \(\lim_{n\to\infty}f(n)/g(n)=0\)，那么就有</p>
+          <div class="equation">\[\log_a n\ll n^\alpha\ll n^\beta\ll b^n\ll n!\ll n^n,\]</div>
+          <p>其中 \(a&gt;1,\ 0&lt;\alpha&lt;1,\ \beta\ge1,\ b&gt;1\)。</p>
+          <h3>首项为大原则</h3>
+          <p>对于固定的 \(m,k\)，当 \(a_m,b_k\ne0\) 时，有</p>
+          <div class="equation">\[
+          \lim_{n\to\infty}\frac{a_mn^m+\cdots+a_1n+a_0}{b_kn^k+\cdots+b_1n+b_0}
+          =\lim_{n\to\infty}\frac{a_mn^m}{b_kn^k}
+          =\begin{cases} \infty,&m&gt;k,\\ \frac{a_m}{b_m},&m=k,\\ 0,&m&lt;k.\end{cases}
+          \]</div>
+          <p><strong>注：</strong>对应函数极限也有同样的结果。另外，如果 \(a_m\ne0\)，那么 \(x\to\infty\) 时，\(a_mx^m+\cdots+a_1x+a_0\) 与首项 \(a_mx^m\) 是等价无穷大，当然这里的 \(\infty\) 也可以改为 \(+\infty\) 或 \(-\infty\)。</p>
+          <h3>拟合法</h3>
+          <div class="equation">\[\lim_{n\to\infty}(x_n-y_n)=0,\quad \lim_{n\to\infty}y_n=a\quad\Longrightarrow\quad \lim_{n\to\infty}x_n=a.\]</div>
+
+          <h2 id="s5">五、夹逼准则</h2>
+          <p>夹逼定理人人都会，这里只给出一些相关的命题。</p>
+          <h3>命题</h3>
+          <p>设 \(a_1,a_2,\dots,a_m\) 是 \(m\) 个正数，则</p>
+          <div class="equation">\[\lim_{n\to\infty}\sqrt[n]{a_1^n+a_2^n+\cdots+a_m^n}=\max\{a_1,a_2,\dots,a_m\}.\]</div>
+          <p>解答：不妨记 \(a_l=\max\{a_1,\dots,a_m\}\)，则</p>
+          <div class="equation">\[a_l\le\sqrt[n]{a_1^n+\cdots+a_m^n}\le\sqrt[n]{m}\,a_l.\]</div>
+          <p>而显然 \(\lim_{n\to\infty}\sqrt[n]{m}=1\)，所以由迫敛性可知结论成立。</p>
+
+          <h2 id="s6">六、积分法</h2>
+          <p>利用积分法来处理数列极限是一种十分重要的方法，也十分好用。</p>
+          <p>方法的介绍很多，这里就直接引用李扬《数学分析强化讲义》的内容了，关于习题和更多的相关内容，若读者感兴趣请自行研究。</p>
+          <h3>积分法</h3>
+          <p>已知 \(f(x)\) 在 \([a,b]\) 连续，则</p>
+          <div class="equation">\[\lim_{n\to\infty}\frac{b-a}{n}\sum_{i=1}^n f\left(a+\frac{i(b-a)}n\right)=\int_a^b f(x)\,\mathrm dx.\]</div>
+          <p>特别地，在 \([0,1]\) 上：</p>
+          <div class="equation">\[\lim_{n\to\infty}\frac1n\sum_{i=1}^n f\left(\frac in\right)=\int_0^1f(x)\,\mathrm dx.\]</div>
+          <div class="note"><strong>注 1：</strong>根据 \(f(x)\) 连续从而有界，所以对每一个固定的 \(i\) ，相应项的极限为 0。因此命题中求和项改变（扔掉）有限项以后，其极限值不发生变化。</div>
+          <div class="equation">\[\lim_{n\to\infty}\left(\frac1n+\frac1{n+1}+\cdots+\frac1{2n-1}\right)=\int_0^1\frac{1}{1+x}\,\mathrm dx=\ln2.\]</div>
+          <div class="note"><strong>注 2：</strong>一定要注意采样点是随着 \(n\to\infty\) 从区间左端逐步走向右端的。不满足此条件的极限不能直接用定积分的方法解答，例如文中的含 \(\sin(i\pi/n)/(n+i/n)\) 的例子，需要先适当放缩再使用定积分法。</div>
+          <div class="equation">\[\frac{\sin\frac{i\pi}{n}}{n+1}\le\frac{\sin\frac{i\pi}{n}}{n+\frac in}\le\frac{\sin\frac{i\pi}{n}}{n}.\]</div>
+          <div class="equation">\[\lim_{n\to\infty}\frac1n\sum_{i=1}^n\sin\frac{i\pi}{n}=\int_0^1\sin(\pi x)\,\mathrm dx=\frac2\pi.\]</div>
+          <p>于是由迫敛性可知，原文给出的极限为 \(2/\pi\)。</p>
+          <h3>瑕积分推广</h3>
+          <p>设函数 \(f(x)\) 在 \((0,1)\) 上单调，且以 \(x=0,1\) 为奇点，同时瑕积分 \(\int_0^1f(x)\,\mathrm dx\) 收敛，则</p>
+          <div class="equation">\[\lim_{n\to\infty}\frac1n\sum_{i=1}^{n-1}f\left(\frac in\right)=\int_0^1f(x)\,\mathrm dx.\]</div>
+          <p>其原因是利用单调性将和式上下夹在两个瑕积分之间，再由迫敛性得到结论。</p>
+          <div class="equation">\[\lim_{n\to\infty}\frac1n\left[\ln\frac1n+\ln\frac2n+\cdots+\ln\frac nn\right]=\int_0^1\ln x\,\mathrm dx=-1.\]</div>
+          <p>从而 \(\lim_{n\to\infty}\frac{\sqrt[n]{n!}}n=1/e\)。</p>
+          <h3>多元函数重积分推广</h3>
+          <p>已知 \(f(x,y)\) 在 \(D=[0,1]\times[0,1]\) 上连续，则</p>
+          <div class="equation">\[\lim_{m\to\infty}\lim_{n\to\infty}\sum_{i=1}^n\sum_{j=1}^m\frac1{mn}f\left(\frac in,\frac jm\right)=\iint_Df(x,y)\,\mathrm dx\,\mathrm dy.\]</div>
+          <div class="equation">\[\lim_{n\to\infty}\sum_{i=1}^n\sum_{j=1}^{2n}\frac{2i+j}{n^3}=4\int_0^1\mathrm dx\int_0^1(x+y)\,\mathrm dy=4.\]</div>
+          <p>所以遇到双求和和乘积的数列极限，要想到利用重积分的定义法进行解答。</p>
+
+          <h2 id="s7">七、放缩</h2>
+          <h3>1. 对分母整体放缩</h3>
+          <p>对于一些数列极限我们可以直接对分母进行放缩。一些题目使用积分法计算数列极限的时候，会遇到无法处理 \(k/n^2\) 这种元素的困难，此时可以通过让该元素中的 \(k=0,1\) 或 \(n\) 来实现放缩，再通过夹逼定理来得到极限。</p>
+          <p>下面的例题：</p>
+          <div class="equation">\[\lim_{n\to\infty}\sum_{k=1}^n\frac1{n^2+n+k}.\]</div>
+          <p>文中进一步通过加上分子 \(k\) 做放缩，得到</p>
+          <div class="equation">\[\frac{1+2+\cdots+n}{n^2+2n}\le\sum_{k=1}^n\frac{k}{n^2+n+k}\le\frac{1+2+\cdots+n}{n^2+n+1}.\]</div>
+          <p>从而两端极限均为 \(1/2\)，所以相应加权和的极限为 \(1/2\)。</p>
+          <p>总之，由于 \(\frac{k}{n^2+n+k}\sim\frac{k}{n^2}\)，可以猜测结果是</p>
+          <div class="equation">\[\lim_{n\to\infty}\sum_{k=1}^n\frac{k}{n^2}=\frac12.\]</div>
+          <h3>2. 利用不等式放缩</h3>
+          <p>前面我们提到了好几个常用的不等式，在计算数列极限问题的时候往往可以使用它们来直接进行放缩，再利用夹逼定理就可以得到极限。不过，这个技巧并不算简单。除了常用的不等式外，经常会使用 Taylor 展开来得到一个不等式；根据积分法的说明，你此时可以把一个 \(k/n\) 这样的元素看作函数自变量 \(x\)，这样一来就可以像处理函数极限 \(x\to0\) 的时候一样使用麦克劳林展开式得到一些有用的不等式放缩。</p>
+
+          <h2 id="s8">八、n 次方相关的数列极限</h2>
+          <p>处理数列极限的时候往往会遇到带有 \(n\) 次方的情况，就像这样：</p>
+          <div class="equation">\[\lim_{n\to\infty}\left(1+\frac1{n+1}+\frac1{n+2}+\cdots+\frac1{n^2+n}\right)^n.\]</div>
+          <p>对于这种带有指数的数列极限，其实最常见的想法是将它化为对数 \(\ln\) 或直接利用不等式放缩。</p>
+          <div class="equation">\[\frac{n}{n^2+n}\le\sum_{k=1}^n\frac1{n^2+k}\le\frac1n.\]</div>
+          <p>于是</p>
+          <div class="equation">\[1+\frac{n}{n^2+n}\le1+\sum_{k=1}^n\frac1{n^2+k}\le1+\frac1n.\]</div>
+          <p>再利用 \((1+1/n)^n\to e\)，由夹逼定理可知该极限为 \(e\)。</p>
+          <p>很简单吧。</p>
+
+          <h2 id="s9">九、分部积分法</h2>
+          <p>当遇到与积分有关的函数极限问题时，往往可以尝试用分部积分法来解决问题。利用分部积分法可以算出极限中积分部分的数列形式，然后再按照平常的数列极限计算方式来计算。</p>
+          <p>当然，如果提到一个函数在区间上连续可微，在区间上可积的时候，那就是要用函数有界性来解决问题的时候了。</p>
+          <h3>经典例子</h3>
+          <p>设 \(f(x)\) 在 \([a,b]\) 上连续可微，证明：</p>
+          <div class="equation">\[\lim_{n\to\infty}\frac{n+1}{(b-a)^{n+1}}\int_a^b(x-a)^nf(x)\,\mathrm dx=f(b).\]</div>
+          <p>由分部积分公式可知</p>
+          <div class="equation">\[\frac{n+1}{(b-a)^{n+1}}\int_a^b(x-a)^nf(x)\,\mathrm dx=f(b)-\frac1{(b-a)^{n+1}}\int_a^b(x-a)^{n+1}f'(x)\,\mathrm dx.\]</div>
+          <p>设 \(|f'(x)|\le M\)，那么</p>
+          <div class="equation">\[\left|\frac1{(b-a)^{n+1}}\int_a^b(x-a)^{n+1}f'(x)\,\mathrm dx\right|\le\frac{M(b-a)}{n+2}\to0.\]</div>
+          <p>因此，当 \(n\to\infty\) 时，对原式取极限便有上面的结论。</p>
+
+          <h2 id="s10">十、迭代的数列极限问题</h2>
+          <h3>1. 单调有界原理</h3>
+          <p>单调有界原理和 Cauchy 准则是经常用来证明数列收敛的方法。当处理迭代的数列极限问题时，采用单调有界原理+数学归纳法结合的方式来证明一个数列有单调性并且有界，于是收敛；再对迭代的数列 \(a_{n+1}=f(a_n)\) 两边对 \(n\) 求极限，通过解方程得到数列 \(a_n\) 的极限 \(a\)。</p>
+          <p>这种方法我个人认为其实就已经足够应付大部分的迭代数列极限问题，甚至在全国大学生数学竞赛（CMC）连续两年的最后一道数分证明题也用到这样的思路（十五届和十六届？）。</p>
+          <p>判断单调性时，一般直接利用相邻项之差 \(a_{n+1}-a_n\) 或者相除 \(a_{n+1}/a_n\) 来判断，再利用数学归纳法来证明有界。</p>
+          <h3>欧拉常数 \(\gamma\)</h3>
+          <p>证明数列</p>
+          <div class="equation">\[a_n=1+\frac12+\cdots+\frac1n-\ln n\]</div>
+          <p>收敛。文中给出</p>
+          <div class="equation">\[a_n&gt;\ln(n+1)-\ln n&gt;0,\qquad a_{n+1}-a_n=\frac1{n+1}-\ln\left(1+\frac1n\right)&lt;0.\]</div>
+          <p>这说明 \(\{a_n\}\) 单调递减有下界，于是 \(\{a_n\}\) 收敛。</p>
+          <div class="equation">\[\gamma=\lim_{n\to\infty}\left(1+\frac12+\cdots+\frac1n-\ln n\right).\]</div>
+          <p>称 \(\gamma\) 为欧拉常数，可以计算出 \(\gamma=0.577216\cdots\)。原文指出这是一个重要且不好研究的常数，迄今仍不知道它是有理数还是无理数。</p>
+          <div class="equation">\[1+\frac12+\cdots+\frac1n=\ln n+\gamma+\alpha_n=\ln n+\gamma+o(1).\]</div>
+          <h3>一个数列的求和可以和对应函数的积分等价</h3>
+          <p>已知连续函数 \(f(x)\) 在 \([1,+\infty)\) 单调递减且 \(f(x)&gt;0\)，证明数列</p>
+          <div class="equation">\[a_n=\sum_{k=1}^n f(k)-\int_1^n f(x)\,\mathrm dx\]</div>
+          <p>收敛。原文随后给出 \(f(x)=1/x\)、\(1/\sqrt{x}\)、\((\ln x)/x\)、\(1/(x\ln x)\) 等具体结论。</p>
+          <h3>递推法</h3>
+          <p>递推法很巧妙，后面六个类型的递推问题本质也是使用递推法。使用时可以将递推公式写成一个有关的函数，再对函数求导数，根据导数来判断其单调性，接着分类讨论来利用单调有界原理证明数列收敛。</p>
+          <p><strong>例题：</strong>设</p>
+          <div class="equation">\[x_1&gt;0,\qquad x_{n+1}=\frac{x_n(x_n^2+3a)}{3x_n^2+a}\quad(a&gt;0).\]</div>
+          <p>记 \(f(x)=\frac{x(x^2+3a)}{3x^2+a}\)，则</p>
+          <div class="equation">\[f'(x)=\frac{3(x^2-a)^2}{(3x^2+a)^2}\ge0.\]</div>
+          <p>所以 \(f(x)\) 严格单调递增，并且 \(f(\sqrt a)=\sqrt a\)。分别讨论 \(x_1=\sqrt a\)、\(0&lt;x_1&lt;\sqrt a\)、\(x_1&gt;\sqrt a\)，均可得到</p>
+          <div class="result">\[\boxed{\lim_{n\to\infty}x_n=\sqrt a}.\]</div>
+
+          <h2 id="s11">十一、递推问题</h2>
+          <p>这里专门介绍六种类型的数列极限递推问题，但请注意这只能保证覆盖大多数的递推问题，实际处理递推问题时应该灵活一些。</p>
+          <h3>（类型一）</h3>
+          <p>已知 \(a_{n+1}=pa_n+q\)，则</p>
+          <div class="equation">\[a_n=\begin{cases}a_1+(n-1)q,&p=1,\\ \left(a_1-\frac{q}{1-p}\right)p^{n-1}+\frac{q}{1-p},&p\ne1.\end{cases}\]</div>
+          <p>于是，\(p=1\) 时收敛等价于 \(q=0\)；\(p\ne1\) 时收敛等价于 \(|p|&lt;1\) 或 \(a_1=q/(1-p)\)。</p>
+          <h3>（类型二）</h3>
+          <p>已知 \(a_{n+2}+pa_{n+1}+qa_n=0\)，构造特征方程 \(x^2+px+q=0\)，根据 \(\Delta=p^2-4q\) 分类。</p>
+          <div class="equation">\[\Delta=0:\quad a_n=(nC_1+C_2)x_0^n;\qquad \Delta\ne0:\quad a_n=C_1x_1^n+C_2x_2^n.\]</div>
+          <p>原文通过构造 \(a_{n+2}-Aa_{n+1}=B(a_{n+1}-Aa_n)\) 来推导这两种情形。</p>
+          <h3>（类型三）</h3>
+          <p>已知</p>
+          <div class="equation">\[a_{n+1}=\frac{Aa_n+B}{Ca_n+D}.\]</div>
+          <p>若对应的特征函数 \(f(x)=\frac{Ax+B}{Cx+D}\) 满足 \(f(x)=x\) 只有一个解 \(x_0\)，则 \(\{1/(a_n-x_0)\}\) 是等差数列；若有两个解 \(x_1,x_2\)，则 \(\{(a_n-x_1)/(a_n-x_2)\}\) 是等比数列。</p>
+          <h3>（类型四）</h3>
+          <p>已知</p>
+          <div class="equation">\[a_{n+1}=\frac{Aa_n^2+B}{2Aa_n+D}.\]</div>
+          <p>若 \(f(x)=x\) 有两个解 \(x_1,x_2\)，则</p>
+          <div class="equation">\[\frac{a_n-x_1}{a_n-x_2}=\left(\frac{a_{n-1}-x_1}{a_{n-1}-x_2}\right)^2.\]</div>
+          <p>若只有一个解 \(x_0\)，则 \(\{a_n-x_0\}\) 是等比数列。</p>
+          <h3>（类型五）</h3>
+          <p>对于 \(a_{n+1}=Aa_n+f(n)\)（\(A\ne0\)），两边同除以 \(A^{n+1}\)，可得</p>
+          <div class="equation">\[a_n=A^{n-1}a_1+A^n\sum_{k=1}^{n-1}\frac{f(k)}{A^{k+1}}.\]</div>
+          <h3>（类型六）</h3>
+          <p>对于 \(a_n=na_{n-1}+f(n)\)，两边同除以 \(n!\) 可得</p>
+          <div class="equation">\[a_n=a_1n!+n!\sum_{k=2}^n\frac{f(k)}{k!}.\]</div>
+          <p>以上六种类型也只是递推问题的冰山一角，其实在数学竞赛和数学专业考研中最常见的是压缩映射原理。</p>
+          <h3>压缩映射原理</h3>
+          <div class="equation">\[|a_{n+1}-a_n|\le r|a_n-a_{n-1}|,\qquad 0&lt;r&lt;1\quad\Longrightarrow\quad\{a_n\}\text{ 收敛}.\]</div>
+          <p>特别地，如果 \(a_{n+1}=f(a_n)\)，其中 \(f\) 可微且存在 \(r\in(0,1)\) 使得 \(|f'(x)|\le r\)，则 \(\{a_n\}\) 收敛。</p>
+          <p>原文给出 Cauchy 准则证明：当 \(n&gt;m\) 时，通过几何级数估计得到</p>
+          <div class="equation">\[|a_n-a_m|&lt;\frac{r^{m-1}}{1-r}|a_2-a_1|\to0.\]</div>
+          <p>从而由柯西准则知数列收敛。</p>
+          <div class="note"><strong>注：</strong>原文还从数项级数的语言解释该结论，并指出若 \(\{a_n\}\subseteq[a,b]\) 且 \(a_{n+1}=f(a_n)\)，只需要在 \([a,b]\) 上满足 \(|f'(\xi)|\le r&lt;1\) 即可。</div>
+          <figure class="bookshot"><img src="assets/book-page-p77.jpeg" alt="参考书 p77 截图"><figcaption>原文提到《数学分析习题课讲义》中的相关页面（p77）。</figcaption></figure>
+          <figure class="bookshot"><img src="assets/book-page-p50.jpeg" alt="参考书 p50 截图"><figcaption>原文提到《数学分析习题课讲义》中的相关页面（p50）。</figcaption></figure>
+
+          <h2 id="s12">十二、Stolz 定理</h2>
+          <h3>Cauchy 命题</h3>
+          <p>在学习 Stolz 定理之前，先了解 Cauchy 命题，其实叫它“平均值定理”似乎更好留下印象。</p>
+          <div class="equation">\[a_n\to a\quad\Longrightarrow\quad\frac{a_1+a_2+\cdots+a_n}{n}\to a.\]</div>
+          <p>原文给出的 \(\varepsilon\)-证明思路是：先固定前 \(N\) 项，使尾项均满足 \(|a_n-a|&lt;\varepsilon\)，再将前 \(N\) 项的总和除以 \(n\) 控制为小量，最终得到整体平均数趋于 \(a\)。</p>
+          <figure class="bookshot"><img src="assets/book-cauchy-proof.jpeg" alt="Cauchy 命题参考书截图"><figcaption>原文所引用的 Cauchy 命题部分截图。</figcaption></figure>
+          <h3>倒乘问题</h3>
+          <p>已知 \(\lim a_n=a\)，\(\lim b_n=b\)，证明</p>
+          <div class="equation">\[\lim_{n\to\infty}\frac{a_1b_n+a_2b_{n-1}+\cdots+a_nb_1}{n}=ab.\]</div>
+          <p>原文通过“杂交放缩套路”</p>
+          <div class="equation">\[|ab-a'b'|\le |b||a-a'|+|a'||b-b'|\]</div>
+          <p>并结合平均值命题得到结论。</p>
+          <h3>Stolz 公式</h3>
+          <div class="equation">\[b_n\nearrow+\infty,\quad \lim_{n\to\infty}\frac{a_{n+1}-a_n}{b_{n+1}-b_n}=A\quad\Longrightarrow\quad\lim_{n\to\infty}\frac{a_n}{b_n}=A.\]</div>
+          <h3>阿贝尔变换（Abel）</h3>
+          <p>Abel 变换可以对一个 \(\sum_{k=1}^na_kb_k\) 这样的数列极限，配合 Stolz 公式一起解决问题。</p>
+          <div class="equation">\[A_n=\sum_{k=1}^na_k,\qquad \sum_{k=1}^na_kb_k=\sum_{k=1}^{n-1}A_k(b_k-b_{k+1})+A_nb_n.\]</div>
+
+          <h2 id="s13">十三、上极限与下极限</h2>
+          <p>上极限和下极限可以快速解决很多利用前面的方法可能会比较复杂的证明，解决递推的数列极限问题时也非常有用。</p>
+          <ol>
+            <li>\(\varliminf x_n\le\varlimsup x_n\)。</li>
+            <li>若 \(k&gt;0\)，则 \(\varliminf(-kx_n)=-k\varlimsup x_n\)，\(\varlimsup(-kx_n)=-k\varliminf x_n\)。</li>
+            <li>若 \(x_n\le y_n\)，则 \(\varliminf x_n\le\varliminf y_n\)，\(\varlimsup x_n\le\varlimsup y_n\)。</li>
+            <li>\(\varlimsup(x_n+y_n)\le\varlimsup x_n+\varlimsup y_n\)，且 \(\varliminf(x_n+y_n)\ge\varliminf x_n+\varliminf y_n\)。</li>
+            <li>\(\varliminf x_n+\varlimsup y_n\) 可夹住 \(\varliminf(x_n+y_n)\) 与 \(\varlimsup(x_n+y_n)\)。</li>
+            <li>若 \(x_n&gt;0,y_n&gt;0\)，则 \(\varlimsup x_ny_n\le(\varlimsup x_n)(\varlimsup y_n)\)，\(\varliminf x_ny_n\ge(\varliminf x_n)(\varliminf y_n)\)。</li>
+            <li>若 \(x_n&gt;0\) 且 \(\varliminf x_n&gt;0\)，则 \(\varlimsup(1/x_n)=1/\varliminf x_n\)。</li>
+            <li>若 \(\{y_n\}\) 收敛，则 \(\varliminf(x_n+y_n)=\varliminf x_n+\lim y_n\)，\(\varlimsup(x_n+y_n)=\varlimsup x_n+\lim y_n\)。</li>
+          </ol>
+
+          <h2 id="s14">十四、分段法</h2>
+          <p>分段法是处理数学分析问题十分重要的思想。在做数列极限问题的时候，积分项的被积函数在可积域上有可能会分成两个部分。例如 \(\int_0^1(1-\sin x)\,dx\)，由于不同区间上的行为不同，可以把积分分成 \([0,\delta]\) 和 \([\delta,1]\) 两部分分别处理。</p>
+          <p>这种分段思想常常与“小区间贡献很小，大区间可控”结合使用。</p>
+          <h3>周期函数</h3>
+          <p>已知 \(f(x)\) 是 \(\mathbb R\) 上周期为 \(T\) 的可积函数，则对任意实数 \(a\)，都有</p>
+          <div class="equation">\[\int_0^Tf(x)\,\mathrm dx=\int_a^{a+T}f(x)\,\mathrm dx.\]</div>
+          <p>原文通过平移变量证明：</p>
+          <div class="equation">\[\int_a^{a+T}f(x)\,\mathrm dx=\int_a^0f(x)\,\mathrm dx+\int_0^Tf(x)\,\mathrm dx+\int_T^{a+T}f(x)\,\mathrm dx=\int_0^Tf(x)\,\mathrm dx.\]</div>
+          <p>提到周期函数和积分的时候，就容易让人联想到 Riemann 引理。</p>
+          <h3>函数形式的 Stolz 公式</h3>
+          <p>已知定义在 \([a,+\infty)\) 的函数 \(f(x),g(x)\) 在任意有限区间有界，且 \(g(x)\) 严格单调递增趋于 \(+\infty\)，\(T&gt;0\) 为常数，若</p>
+          <div class="equation">\[\lim_{x\to+\infty}\frac{f(x+T)-f(x)}{g(x+T)-g(x)}=l,\]</div>
+          <p>则</p>
+          <div class="result">\[\boxed{\lim_{x\to+\infty}\frac{f(x)}{g(x)}=l}.\]</div>
+          <p>其中 \(l\) 为有限数或 \(+\infty\) 或 \(-\infty\)。</p>
+
+          <h2>结语</h2>
+          <p>以上就是总结的一些处理数列极限的常用定理和技巧，如果能够熟练使用这些技术，大部分的数列极限题目应该是可以迎刃而解的。</p>
+
+          <div class="source-box">
+            <div class="k">Original Source</div>
+            <p>本文根据作者发布于知乎的原文制作成此独立网页版本，原文发表于 2026-05-08。</p>
+            <a class="source-link" href="https://zhuanlan.zhihu.com/p/2012680278066348544?share_code=cPhZgNCRjeIP&utm_psn=2012726119573517084" target="_blank" rel="noopener">↗ 查看知乎原文</a>
+            <div class="notice"><strong>联系作者</strong><br>本文内容如有错误、遗漏或其他问题，请联系作者 DUTsaver 进行反馈。<br>GitHub：<a href="https://github.com/DUTsaver" target="_blank" rel="noopener">github.com/DUTsaver</a></div>
+          </div>
+        </article>
+
+      </div>
+
+      <footer>
+        <span>© 2026 · DUTsaver / Personal Knowledge Archive</span>
+        <span>Built for GitHub Pages · Mathematics</span>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    const article = document.getElementById('article');
+    const tocLinks = [...document.querySelectorAll('#toc a')];
+    const sections = [...document.querySelectorAll('article h2[id]')];
+
+    function updateScrollState(){
+      const scrollTop = window.scrollY;
+      let active = sections[0]?.id;
+      for(const sec of sections){
+        if(sec.getBoundingClientRect().top <= 150) active = sec.id;
+      }
+      tocLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href') === `#${active}`));
+    }
+    window.addEventListener('scroll', updateScrollState, {passive:true});
+    window.addEventListener('load', updateScrollState);
+  </script>
+</body>
+</html>
