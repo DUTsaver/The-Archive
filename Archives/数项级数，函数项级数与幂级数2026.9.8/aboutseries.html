@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="article-title" content="数项级数，函数项级数与幂级数">
+  <meta name="article-date" content="2026-09-08">
+  <meta name="article-category" content="math">
+  <meta name="article-author" content="DUTsaver">
+  <meta name="article-excerpt" content="数项级数，函数项级数与幂级数是数学分析中的重要概念，它们在解决实际问题中发挥着重要作用。">
+
+  <meta name="article-tag" content="数学">
+  <meta name="article-tag" content="数学分析">
+  <meta name="article-tag" content="级数">
+
+  <meta name="article-symbol" content="∑a_n">
+  <meta name="article-cover" content="949258.jpg">
+  <!-- ================================================================
+       [文章信息] 从这里开始填写每一篇文章自己的信息
+       ================================================================ -->
+  <meta name="description" content="【填写：文章摘要】">
+  <meta name="author" content="【填写：作者名】">
+  <title>【填写：文章标题】 · The Archive</title>
+
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- MathJax：支持 $...$ / \(...\) 行内公式以及 $$...$$ / \[...\] 独立公式 -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  <style>
+    :root{
+      --bg:#f2eee6;
+      --paper:#fffdf8;
+      --paper-2:#f9f6ef;
+      --ink:#171717;
+      --muted:#777269;
+      --soft:#9b958b;
+      --line:rgba(23,23,23,.11);
+      --accent:#8c2d40;
+      --sidebar:260px;
+      --shadow:0 20px 60px rgba(45,38,28,.10);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:28px}
+    body{
+      margin:0;color:var(--ink);background:
+      radial-gradient(circle at 82% 8%,rgba(140,45,64,.055),transparent 26%),
+      radial-gradient(circle at 18% 48%,rgba(42,64,89,.035),transparent 25%),
+      var(--bg);
+      font-family:'Noto Sans SC',system-ui,sans-serif;overflow-x:hidden;
+    }
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;z-index:50;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");mix-blend-mode:multiply}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%}
+
+    /* ================================================================
+       [左侧栏]
+       自动根据作者名读取 ../authors/作者名.html 中的信息。
+       如果你的作者页不是 .html，请修改 authorPagePath。
+       ================================================================ */
+    aside{
+      position:fixed;left:0;top:0;bottom:0;width:var(--sidebar);padding:28px 22px 24px;
+      border-right:1px solid var(--line);background:rgba(242,238,230,.90);backdrop-filter:blur(18px);z-index:20;
+      display:flex;flex-direction:column;
+    }
+    .eyebrow{font:700 10px/1 Space Mono,monospace;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
+    .brand{margin:10px 0 26px;font:700 31px/1 'Cormorant Garamond',serif;letter-spacing:-.03em}
+    .toc-label{font:700 9px Space Mono,monospace;letter-spacing:.15em;color:var(--soft);text-transform:uppercase;margin:0 0 10px 12px}
+    .toc{display:grid;gap:3px;overflow:auto;padding-right:3px}
+    .toc a{display:block;padding:8px 10px;border-radius:10px;font-size:11px;line-height:1.45;color:#5b564f;transition:.2s}
+    .toc a:hover{background:rgba(255,255,255,.55);color:var(--ink)}
+    .toc a.active{background:var(--ink);color:#fff}
+    .profile{margin-top:auto;padding-top:16px;border-top:1px solid var(--line)}
+    .profile-row{display:flex;align-items:center;gap:11px}
+    .avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.9);box-shadow:0 4px 12px rgba(0,0,0,.1);background:#ddd6ca}
+    .profile-name{font-weight:700;font-size:14px}.profile-sub{margin-top:2px;color:var(--muted);font:9px Space Mono,monospace}
+    .author-link{color:var(--ink);font-weight:700;border-bottom:1px solid rgba(23,23,23,.14)}
+    .author-link:hover{color:var(--accent);border-color:var(--accent)}
+    .profile-links{display:flex;gap:7px;margin-top:10px}.profile-link{display:flex;align-items:center;justify-content:center;min-width:31px;height:31px;padding:0 9px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.42);font:700 9px Space Mono,monospace;transition:.2s}.profile-link:hover{transform:translateY(-2px);background:#fff}
+    .profile-note{margin-top:10px;color:var(--soft);font-size:9px;line-height:1.65}
+
+    main{margin-left:var(--sidebar);padding:24px 46px 80px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;padding-bottom:18px;border-bottom:1px solid var(--line);color:var(--muted)}
+    .back{font:700 9px Space Mono,monospace;letter-spacing:.08em;text-transform:uppercase}.back:hover{color:var(--ink)}
+    .date-now{font:700 9px Space Mono,monospace;white-space:nowrap}
+    .article-wrap{max-width:none;margin:0 auto}
+    header{padding:64px 0 30px;max-width:1200px}
+    .kicker{font:700 10px Space Mono,monospace;letter-spacing:.16em;color:var(--accent);text-transform:uppercase}
+    h1{margin:13px 0 15px;font:600 clamp(52px,6.4vw,92px)/.92 'Cormorant Garamond',serif;letter-spacing:-.045em;max-width:1100px}
+    .dek{margin:0;max-width:980px;color:#625d55;font-size:15px;line-height:1.95}
+    .meta-line{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:20px;color:var(--muted);font:9px Space Mono,monospace}
+    .pill{padding:5px 8px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.48)}
+    .hero{margin:8px 0 42px;background:var(--paper);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+    .hero img{display:block;width:100%;max-height:440px;object-fit:cover}
+    .hero-caption{padding:13px 16px;color:var(--soft);font-size:10px;line-height:1.7;border-top:1px solid var(--line)}
+    .article-grid{display:block}
+    article{background:rgba(255,253,248,.72);border:1px solid var(--line);border-radius:22px;padding:36px 44px 46px;box-shadow:0 3px 0 rgba(23,23,23,.018)}
+    .lead{font-size:17px;line-height:2.05;color:#393630}
+    article h2{scroll-margin-top:22px;margin:48px 0 18px;padding-top:22px;border-top:1px solid var(--line);font:700 27px/1.2 'Cormorant Garamond',serif;letter-spacing:-.01em}
+    article h3{margin:31px 0 12px;font:700 17px/1.35 'Noto Sans SC',sans-serif}
+    article h4{margin:24px 0 10px;font:700 13px/1.35 Space Mono,monospace;letter-spacing:.04em}
+    article p{margin:13px 0;font-size:14px;line-height:2.02;color:#454039}
+    article strong{color:#2b2823}
+    article ul,article ol{color:#454039;font-size:14px;line-height:2.0}
+    article li{margin:5px 0}
+    .equation{margin:22px 0;padding:16px 14px;border:1px solid rgba(23,23,23,.08);border-left:3px solid rgba(140,45,64,.48);border-radius:12px;background:#fbf8f1;overflow:auto;text-align:center}
+    .proof{padding:14px 16px;margin:16px 0;background:rgba(242,238,230,.62);border-radius:12px;border:1px solid var(--line)}
+    .note{padding:15px 16px;margin:18px 0;border-left:3px solid var(--accent);background:rgba(140,45,64,.035);border-radius:0 12px 12px 0;color:#5f584f}
+    .result{padding:15px 16px;margin:18px 0;background:rgba(222,223,240,.34);border:1px solid rgba(23,23,23,.08);border-radius:12px}
+    .quote{margin:22px 0;padding:12px 18px;border-left:2px solid #aaa197;color:#696359;font-style:italic}
+    .bookshot{margin:24px auto;max-width:760px;background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 10px 28px rgba(45,38,28,.08)}
+    .bookshot img{display:block;width:100%}.bookshot figcaption{padding:10px 13px;font-size:10px;color:var(--soft);line-height:1.7}
+    .source-box{margin-top:32px;padding:22px 24px;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,248,.84)}
+    .source-box .k{font:700 9px Space Mono,monospace;letter-spacing:.13em;color:var(--soft);text-transform:uppercase}
+    .source-box p{margin:8px 0 0;font-size:11px;line-height:1.8;color:var(--muted)}
+    .source-link{display:inline-flex;margin-top:10px;padding:8px 11px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:10px;transition:.2s}.source-link:hover{transform:translateY(-2px)}
+    .notice{margin-top:12px;padding:14px;border-radius:12px;background:rgba(140,45,64,.045);color:#6f514f;font-size:10px;line-height:1.75}
+    footer{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;color:var(--soft);font-size:9px}
+
+    @media (max-width:1000px){
+      :root{--sidebar:220px}
+      main{padding-left:30px;padding-right:28px}
+    }
+    @media (max-width:740px){
+      aside{position:sticky;top:0;bottom:auto;width:100%;height:auto;padding:10px 12px;border-right:0;border-bottom:1px solid var(--line);flex-direction:row;align-items:center;gap:10px}
+      .eyebrow,.brand,.toc-label,.profile{display:none}.toc{display:flex;gap:4px;overflow:auto;width:100%}.toc a{white-space:nowrap;padding:7px 9px}
+      main{margin-left:0;padding:14px 12px 50px}.topbar{padding-bottom:11px}.date-now{display:none}
+      header{padding:36px 0 24px}h1{font-size:54px}.dek{font-size:12px}
+      .hero{border-radius:17px;margin-bottom:24px}.hero img{max-height:280px}
+      article{padding:24px 20px 32px;border-radius:17px}article h2{font-size:24px;margin-top:38px}article p{font-size:13px;line-height:1.95}.equation{font-size:13px;padding:13px 8px}
+      footer{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================================
+       [作者设置] 只改这一段，下面作者栏会自动使用这个名字。
+
+       规则：
+       1. authorName 必须和 ../authors/作者名.html 完全一致
+       2. 例如 authorName = "DUTsaver"
+          则默认读取：../authors/DUTsaver.html
+       3. 如果你以后把作者页放到 ../authors/DUTsaver/index.html，
+          只需要把 authorPagePath 改掉即可。
+       ================================================================ -->
+  <script>
+    const ARTICLE_CONFIG = {
+      authorName: "【填写：作者名】",
+      authorPagePath: "../authors/【填写：作者名】.html",
+      authorSourcePath: "../authors/【填写：作者名】.html"
+    };
+  </script>
+
+  <aside>
+    <div class="eyebrow">Article / 【分类】</div>
+    <div class="brand">notebook.</div>
+    <div class="toc-label">Contents</div>
+
+    <!-- ==============================================================
+         [目录] 只需要修改这里。
+         每个 href 必须对应正文中的 h2 id。
+         ==============================================================
+    -->
+    <nav class="toc" id="toc">
+      <a href="#s1">一 · 【章节标题】</a>
+      <a href="#s2">二 · 【章节标题】</a>
+      <a href="#s3">三 · 【章节标题】</a>
+      <!-- 继续复制上面的格式增加目录 -->
+    </nav>
+
+    <!-- ==============================================================
+         [作者信息]
+         JS 会从 ../authors/作者名.html 获取头像、名字、简介、GitHub、
+         Email 等数据；若作者页使用下面约定的 HTML meta 标签，
+         页面就会自动同步。
+         ==============================================================
+    -->
+    <div class="profile" id="authorProfile">
+      <div class="profile-row">
+        <img id="authorAvatar" class="avatar" src="https://github.com/DUTsaver.png?size=160" alt="Author avatar">
+        <div>
+          <div class="profile-name">
+            <a id="authorNameLink" class="author-link" href="#">【作者名】</a>
+          </div>
+          <div id="authorSub" class="profile-sub">AUTHOR · THE ARCHIVE</div>
+        </div>
+      </div>
+      <div class="profile-links" id="authorLinks"></div>
+      <div class="profile-note" id="authorBio">作者信息正在读取……</div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="topbar">
+      <a class="back" href="../index.html">← Back to Archive</a>
+      <div class="date-now">PERSONAL KNOWLEDGE ARCHIVE</div>
+    </div>
+
+    <div class="article-wrap">
+      <header>
+        <!-- ============================================================
+             [文章头部] 每篇文章修改下面 5 项。
+             ============================================================ -->
+        <div class="kicker">【分类】 · 【关键词】</div>
+        <h1>【文章标题】</h1>
+        <p class="dek">【文章摘要 / 导语】</p>
+
+        <div class="meta-line">
+          <span>
+            <a id="headerAuthorLink" class="author-link" href="#">【作者名】</a>
+          </span>
+          <span>·</span>
+          <span>【YYYY.MM.DD】</span>
+          <span>·</span>
+          <span class="pill">【Tag 1】</span>
+          <span class="pill">【Tag 2】</span>
+          <span class="pill">【Tag 3】</span>
+        </div>
+      </header>
+
+      <!-- ================================================================
+           [封面图]
+           把图片放到文章所在文件夹，或者写正确相对路径。
+           例如：src="949258.jpg"
+           ================================================================= -->
+      <figure class="hero">
+        <img src="【封面图片路径】" alt="【封面图片说明】">
+        <figcaption class="hero-caption">【可选：封面图片说明】</figcaption>
+      </figure>
+
+      <div class="article-grid">
+        <!-- ============================================================
+             [正文 START]
+
+             从这里开始写文章正文。
+
+             推荐结构：
+             <h2 id="s1">一、章节标题</h2>
+             <p>正文……</p>
+
+             数学公式：
+             <div class="equation">\[
+               你的 LaTeX 公式
+             \]</div>
+
+             普通提示：
+             <div class="note"><strong>注：</strong>这里是补充说明。</div>
+
+             证明：
+             <div class="proof">这里写证明过程。</div>
+
+             结论：
+             <div class="result">\[\boxed{...}\]</div>
+
+             引用：
+             <div class="quote">这里是引用内容。</div>
+
+             图片：
+             <figure class="bookshot">
+               <img src="图片路径" alt="图片说明">
+               <figcaption>图片说明</figcaption>
+             </figure>
+
+             [正文 END]
+             ============================================================ -->
+        <article id="article">
+
+          <p class="lead">【文章开头 / 引言。建议使用 lead 类作为第一段。】</p>
+
+          <h2 id="s1">一、【章节标题】</h2>
+          <p>【正文内容……】</p>
+
+          <h3>【小节标题】</h3>
+          <p>【正文内容……】</p>
+
+          <div class="equation">
+            \[
+              【LaTeX 数学公式】
+            \]
+          </div>
+
+          <div class="note">
+            <strong>注：</strong>【补充说明、学习心得或者容易忽略的地方。】
+          </div>
+
+          <h2 id="s2">二、【章节标题】</h2>
+          <p>【正文内容……】</p>
+
+          <h2 id="s3">三、【章节标题】</h2>
+          <p>【正文内容……】</p>
+
+          <!-- ============================================================
+               继续在这里增加正文。
+               增加新章节时：
+                 1. 写一个 <h2 id="s4">……</h2>
+                 2. 在左侧目录增加 <a href="#s4">……</a>
+               ============================================================ -->
+
+          <h2 id="conclusion">结语</h2>
+          <p>【文章结语】</p>
+
+          <!-- ============================================================
+               [原文引用 / 联系作者]
+               只需要修改原文 URL 和说明。
+               ============================================================ -->
+          <div class="source-box">
+            <div class="k">Original Source</div>
+            <p>本文为作者个人学习记录的网页整理版本。原文链接如下：</p>
+            <a class="source-link" href="【原文URL】" target="_blank" rel="noopener">↗ 查看原文</a>
+            <div class="notice">
+              <strong>联系作者</strong><br>
+              本文内容如有错误、遗漏或其他问题，请联系作者 <span id="noticeAuthor">【作者名】</span> 进行反馈。
+              <br>
+              GitHub：<a id="noticeGithub" href="https://github.com/DUTsaver" target="_blank" rel="noopener">加载中</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <footer>
+        <span>© 2026 · <span id="footerAuthor">【作者名】</span> / Personal Knowledge Archive</span>
+        <span>Built for GitHub Pages · The Archive</span>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    /* ================================================================
+       [自动作者信息系统]
+
+       作者页建议使用以下 meta 标签，模板会尝试读取：
+
+       <meta name="author-name" content="DUTsaver">
+       <meta name="author-avatar" content="https://github.com/DUTsaver.png?size=200">
+       <meta name="author-bio" content="Mathematics · Numerical Computation · Computer Science · AI">
+       <meta name="author-github" content="https://github.com/DUTsaver">
+       <meta name="author-email" content="your-email@example.com">
+       <meta name="author-zhihu" content="https://www.zhihu.com/...">
+
+       如果作者页不是通过这些 meta 标签保存资料，也不要紧：
+       页面会使用 fallback 默认值，不影响正文显示。
+       ================================================================ */
+
+    const fallbackAuthor = {
+      name: ARTICLE_CONFIG.authorName,
+      avatar: `https://github.com/${ARTICLE_CONFIG.authorName}.png?size=160`,
+      bio: 'The Archive author',
+      github: `https://github.com/${ARTICLE_CONFIG.authorName}`,
+      email: '',
+      zhihu: ''
+    };
+
+    function metaFromDocument(doc, key) {
+      const el = doc.querySelector(`meta[name="${key}"]`);
+      return el ? el.getAttribute('content') : '';
+    }
+
+    function createProfileLink(label, href) {
+      if (!href) return null;
+      const a = document.createElement('a');
+      a.className = 'profile-link';
+      a.href = href;
+      a.textContent = label;
+      if (!href.startsWith('mailto:')) {
+        a.target = '_blank';
+        a.rel = 'noopener';
+      }
+      return a;
+    }
+
+    function setAuthor(author) {
+      document.getElementById('authorAvatar').src = author.avatar || fallbackAuthor.avatar;
+      document.getElementById('authorAvatar').alt = `${author.name} avatar`;
+
+      const nameLink = document.getElementById('authorNameLink');
+      nameLink.textContent = author.name;
+      nameLink.href = ARTICLE_CONFIG.authorPagePath;
+
+      const headerAuthor = document.getElementById('headerAuthorLink');
+      headerAuthor.textContent = author.name;
+      headerAuthor.href = ARTICLE_CONFIG.authorPagePath;
+
+      document.getElementById('authorSub').textContent = 'AUTHOR · THE ARCHIVE';
+      document.getElementById('authorBio').textContent = author.bio || 'The Archive author';
+      document.getElementById('noticeAuthor').textContent = author.name;
+      document.getElementById('footerAuthor').textContent = author.name;
+
+      const githubLink = document.getElementById('noticeGithub');
+      githubLink.href = author.github || fallbackAuthor.github;
+      githubLink.textContent = author.github || fallbackAuthor.github;
+
+      const links = document.getElementById('authorLinks');
+      links.innerHTML = '';
+
+      const gh = createProfileLink('GH', author.github);
+      const mail = createProfileLink('MAIL', author.email ? `mailto:${author.email}` : '');
+      const zh = createProfileLink('ZH', author.zhihu);
+      if (gh) links.appendChild(gh);
+      if (mail) links.appendChild(mail);
+      if (zh) links.appendChild(zh);
+    }
+
+    async function loadAuthor() {
+      setAuthor(fallbackAuthor);
+      try {
+        const response = await fetch(ARTICLE_CONFIG.authorSourcePath, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`Author page HTTP ${response.status}`);
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+
+        const author = {
+          name: metaFromDocument(doc, 'author-name') || fallbackAuthor.name,
+          avatar: metaFromDocument(doc, 'author-avatar') || fallbackAuthor.avatar,
+          bio: metaFromDocument(doc, 'author-bio') || fallbackAuthor.bio,
+          github: metaFromDocument(doc, 'author-github') || fallbackAuthor.github,
+          email: metaFromDocument(doc, 'author-email') || '',
+          zhihu: metaFromDocument(doc, 'author-zhihu') || ''
+        };
+        setAuthor(author);
+      } catch (error) {
+        console.warn('Unable to read author profile automatically. Fallback author information is used.', error);
+      }
+    }
+
+    /* ================================================================
+       [目录自动高亮]
+       ================================================================ */
+    const tocLinks = [...document.querySelectorAll('#toc a')];
+    const sections = [...document.querySelectorAll('article h2[id]')];
+
+    function updateScrollState(){
+      const offset = 150;
+      let active = sections[0]?.id;
+      for(const sec of sections){
+        if(sec.getBoundingClientRect().top <= offset) active = sec.id;
+      }
+      tocLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === `#${active}`);
+      });
+    }
+
+    window.addEventListener('scroll', updateScrollState, { passive:true });
+    window.addEventListener('load', () => {
+      updateScrollState();
+      loadAuthor();
+    });
+  </script>
+</body>
+</html>

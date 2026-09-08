@@ -23,6 +23,11 @@
 
 ---
 
+## 说明：当发布学习记录或文章时使用html模板articale template.html文件来写作，所用所有资源做成文件夹放入Archives文件夹中。
+## 编辑author信息在author文件中新建ID
+
+---
+
 ## 📚 About
 
 The Archive is a personal knowledge archive designed to collect and organize
