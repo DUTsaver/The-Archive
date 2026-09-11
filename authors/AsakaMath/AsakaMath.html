@@ -131,9 +131,14 @@ async function loadAuthorArticles() {
       authorPosts.map(post => {
 
         const tags =
-          Array.isArray(post.tags)
-            ? post.tags
-            : [];
+  Array.isArray(post.tags)
+    ? post.tags.map(
+        tag =>
+          Array.isArray(tag)
+            ? tag[0]
+            : tag
+      )
+    : [];
 
         return `
           <a class="article" href="../../${post.url.replace(/^\.\/+/, '')}">
