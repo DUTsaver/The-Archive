@@ -1,5 +1,29 @@
 [
   {
+    "title": "【学术报告】An intermediate eigenvalue problem in electronic structure calculation",
+    "date": "2026-09-11",
+    "category": "math",
+    "author": "Hilbert",
+    "excerpt": "2026年9月11日，日本名古屋大学的张绍良教授在大连理工大学做了题为《An intermediate eigenvalue problem in electronic structure calculation》的学术报告。报告中，张教授介绍了电子结构计算中的一个中间特征值问题，并提出了一种新的数值方法来解决该问题。",
+    "symbol": "输入文字抽象生成的cover",
+    "cover": "Archives/电子结构计算中的中间特征值问题/cover.jpg",
+    "tags": [
+      [
+        "数学",
+        "math"
+      ],
+      [
+        "数值代数",
+        "math"
+      ],
+      [
+        "学术报告",
+        "math"
+      ]
+    ],
+    "url": "Archives/电子结构计算中的中间特征值问题/中间特征值问题.html"
+  },
+  {
     "title": "数项级数，函数项级数与幂级数",
     "date": "2026-09-08",
     "category": "math",
