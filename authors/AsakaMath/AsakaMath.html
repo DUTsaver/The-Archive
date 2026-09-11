@@ -136,7 +136,7 @@ async function loadAuthorArticles() {
             : [];
 
         return `
-          <a class="article" href="${post.url}">
+          <a class="article" href="../../${post.url.replace(/^\.\/+/, '')}">
 
             <div class="date">
               ${post.date || '—'}
