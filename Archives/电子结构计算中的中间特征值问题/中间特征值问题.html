@@ -22,7 +22,7 @@
        ================================================================ -->
   <meta name="description" content="2026年9月11日，日本名古屋大学的张绍良教授在大连理工大学做了题为《An intermediate eigenvalue problem in electronic structure calculation》的学术报告。报告中，张教授介绍了电子结构计算中的一个中间特征值问题，并提出了一种新的数值方法来解决该问题。">
   <meta name="author" content="Hilbert">
-  <title>【填写：文章标题】 · The Archive</title>
+  <title>【学术报告】An intermediate eigenvalue problem in electronic structure calculation· The Archive</title>
 
   <link rel="icon" type="image/png" href="../../favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -162,13 +162,13 @@
   <script>
     const ARTICLE_CONFIG = {
       authorName: "Hilbert",
-      authorPagePath: "../authors/Hilbert.html",
-      authorSourcePath: "../authors/Hilbert.html"
+      authorPagePath: "../../authors/Hilbert/Hilbert.html",
+      authorSourcePath: "../../authors/Hilbert/Hilbert.html"
     };
   </script>
 
   <aside>
-    <div class="eyebrow">Article / 【分类】</div>
+    <div class="eyebrow">Article / 学术报告</div>
     <div class="brand">notebook.</div>
     <div class="toc-label">Contents</div>
 
@@ -178,9 +178,10 @@
          ==============================================================
     -->
     <nav class="toc" id="toc">
-      <a href="#s1">一 · 【章节标题】</a>
-      <a href="#s2">二 · 【章节标题】</a>
-      <a href="#s3">三 · 【章节标题】</a>
+      <a href="#s1">一 · 问题描述</a>
+      <a href="#s2">二 · 解决方法</a>
+      <a href="#s3">三 · 算法</a>
+      <a href="#s4">四 · 未来可能的问题</a>
       <!-- 继续复制上面的格式增加目录 -->
     </nav>
 
@@ -196,7 +197,7 @@
         <img id="authorAvatar" class="avatar" src="https://github.com/Hilbert.png?size=160" alt="Author avatar">
         <div>
           <div class="profile-name">
-            <a id="authorNameLink" class="author-link" href="#">【作者名】</a>
+            <a id="authorNameLink" class="author-link" href="#">Hilbert</a>
           </div>
           <div id="authorSub" class="profile-sub">AUTHOR · THE ARCHIVE</div>
         </div>
@@ -217,8 +218,8 @@
         <!-- ============================================================
              [文章头部] 每篇文章修改下面 5 项。
              ============================================================ -->
-        <div class="kicker">【分类】 · 【关键词】</div>
-        <h1>【文章标题】</h1>
+        <div class="kicker">学术报告 · 数值代数</div>
+        <h1>An intermediate eigenvalue problem in electronic structure calculation</h1>
         <p class="dek">We consider the generalized eigenvalue problem A x = λB x where A is a real symmetric matrix and B is a real symmetric positive definite matrix.A property of this problem is that all the eigenvalues are real,and it is often needed to compute a number of eigenvalues which are important for applications.In the field of electronic structure calculation, there has emerged a need to find the eigenvaluesrelated to luminescence of organic materials. The targets are small in number,and from the atomic configuration of the material it is determined which eigenvalues need to be computed.In this talk, we present a bisection approach to obtaining the eigenvalues related to the luminescence.By iteratively searching and narrowing the interval within which the target eigenvalues exist,we can find them without computing unrelated eigenvalues.
 
 </p>
@@ -283,28 +284,26 @@
              ============================================================ -->
         <article id="article">
 
-          <p class="lead">【文章开头 / 引言。建议使用 lead 类作为第一段。】</p>
+          <p class="lead">张教授在报告中首先介绍了该问题的由来，起初是一个物理学教授来咨询他们如何在广义特征值问题中寻找到他们想要得到的第k个特征值，他们需要知道这个特征值在广义特征值问题中的位置。解决该问题主要用到了Sylvester惯性定理，矩阵合同和二分法思想</p>
 
-          <h2 id="s1">一、【章节标题】</h2>
+          <h2 id="s1">一、问题介绍</h2>
+          <p>来自于一个物理教授的提问，关于Ax = λBx这个广义特征值问题中想要得到的第k个特征值，他们需要知道这个特征值在广义特征值问题中的位置。解决该问题主要用到了Sylvester惯性定理，矩阵合同和二分法思想</p>
+
+        
+
+          <h2 id="s2">二、解决方法</h2>
+          <p>为了理解解决方法，你要先了解以下内容</p>
+
+          <h3>1.Sylvester惯性定理</h3>
           <p>【正文内容……】</p>
 
-          <h3>【小节标题】</h3>
+          <h3>2.矩阵合同</h3>
           <p>【正文内容……】</p>
 
-          <div class="equation">
-            \[
-              【LaTeX 数学公式】
-            \]
-          </div>
-
-          <div class="note">
-            <strong>注：</strong>【补充说明、学习心得或者容易忽略的地方。】
-          </div>
-
-          <h2 id="s2">二、【章节标题】</h2>
+          <h3>3.二分法</h3>
           <p>【正文内容……】</p>
 
-          <h2 id="s3">三、【章节标题】</h2>
+          <h2 id="s3">三、算法</h2>
           <p>【正文内容……】</p>
 
           <!-- ============================================================
@@ -314,7 +313,7 @@
                  2. 在左侧目录增加 <a href="#s4">……</a>
                ============================================================ -->
 
-          <h2 id="conclusion">结语</h2>
+          <h2 id="conclusion">未来可能的问题</h2>
           <p>【文章结语】</p>
 
           <!-- ============================================================
