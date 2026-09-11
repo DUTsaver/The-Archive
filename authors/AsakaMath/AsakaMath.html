@@ -17,6 +17,8 @@
     @media(max-width:760px){aside{position:sticky;width:100%;height:auto;bottom:auto;padding:11px 13px;border-right:0;border-bottom:1px solid var(--line);flex-direction:row;align-items:center}.eyebrow,.brand,.toc-label,.profile{display:none}.toc{display:flex;overflow-x:auto;width:100%}.toc a{white-space:nowrap;padding:8px 10px}main{margin-left:0;padding:18px 14px 45px}.hero{grid-template-columns:1fr;gap:20px}.hero-avatar{width:120px;height:120px}.name{font-size:64px}.article{grid-template-columns:1fr;gap:9px}.read{display:none}.footer{flex-direction:column;gap:6px}}
   </style>
 </head>
+
+
 <body>
   <aside>
     <div class="eyebrow">Author / Profile</div>
@@ -57,20 +59,141 @@
     </header>
 
     <section class="section" id="articles">
-      <div class="section-head"><h2>ARTICLES BY DUTSAVER</h2><p>署名文章 · 按日期排列</p></div>
-      <div class="article-list">
-        <a class="article" href="../../Archives/数学分析中处理数列极限的各种技巧2026.9.7/math-analysis-sequence-limits.html">
-          <div class="date">2026.05.08</div>
-          <div><h3>数学分析中处理数列极限的各种技巧</h3><p>整理数列极限中常见而实用的处理技巧，包括三角函数公式、初等不等式、基本极限、夹逼准则、积分法、放缩、递推、Stolz 定理与上下极限等。</p><div class="tags"><span class="tag">数学分析</span><span class="tag">数列极限</span><span class="tag">学习记录</span></div></div>
-          <div class="read">READ →</div>
-        </a>
-        <a class="article" href="../index.html">
-          <div class="date">—</div>
-          <div><h3>更多文章将在这里出现</h3><p>以后每新增一篇文章，只需要把作者条目加入这里；下一步也可以改成由数据库或 Markdown 自动生成。</p></div>
-          <div class="read">ARCHIVE</div>
-        </a>
+  <div class="section-head">
+    <h2>ARTICLES BY ASAKAMATH</h2>
+    <p>署名文章 · 按日期排列</p>
+  </div>
+
+  <div class="article-list" id="authorArticles">
+    <div class="loading">
+      正在读取文章……
+    </div>
+  </div>
+</section>
+
+<script>
+async function loadAuthorArticles() {
+
+  const articleList =
+    document.getElementById('authorArticles');
+
+  try {
+
+    const response =
+      await fetch('../../posts.json?v=' + Date.now());
+
+    if (!response.ok) {
+      throw new Error('无法读取 posts.json');
+    }
+
+    const posts = await response.json();
+
+    if (!Array.isArray(posts)) {
+      throw new Error('posts.json 格式错误');
+    }
+
+    /*
+     * 只保留 AsakaMath 的文章
+     */
+    const authorPosts = posts.filter(
+      post =>
+        String(post.author || '').toLowerCase()
+        === 'asakamath'
+    );
+
+    /*
+     * 按日期从新到旧排列
+     */
+    authorPosts.sort(
+      (a, b) =>
+        String(b.date || '')
+          .localeCompare(String(a.date || ''))
+    );
+
+    /*
+     * 没有文章
+     */
+    if (authorPosts.length === 0) {
+
+      articleList.innerHTML = `
+        <div class="loading">
+          暂无署名文章。
+        </div>
+      `;
+
+      return;
+    }
+
+    /*
+     * 自动生成文章列表
+     */
+    articleList.innerHTML =
+      authorPosts.map(post => {
+
+        const tags =
+          Array.isArray(post.tags)
+            ? post.tags
+            : [];
+
+        return `
+          <a class="article" href="${post.url}">
+
+            <div class="date">
+              ${post.date || '—'}
+            </div>
+
+            <div>
+              <h3>
+                ${post.title || 'Untitled'}
+              </h3>
+
+              <p>
+                ${post.description || ''}
+              </p>
+
+              <div class="tags">
+                ${tags.map(tag => `
+                  <span class="tag">
+                    ${tag}
+                  </span>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="read">
+              READ →
+            </div>
+
+          </a>
+        `;
+
+      }).join('');
+
+  } catch (error) {
+
+    console.error(
+      'Failed to load author articles:',
+      error
+    );
+
+    articleList.innerHTML = `
+      <div
+        class="loading"
+        style="
+          color:#8c2d40;
+          border-color:rgba(140,45,64,.25);
+        "
+      >
+        无法读取文章索引。<br><br>
+        请检查网站根目录是否存在
+        <strong>posts.json</strong>。
       </div>
-    </section>
+    `;
+  }
+}
+
+loadAuthorArticles();
+</script>
 
     <footer class="footer"><span>© 2026 · DUTsaver</span><span>The Archive / Author Profile</span></footer>
   </div></main>
